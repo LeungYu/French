@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">听写之王？</string>
+    <string name="app_name">影听</string>
     <string name="translate_frame_title">哎哟，您写错啦！</string>
     <string name="translate_frame_main_example_title">例句：</string>
     <string name="translate_frame_loading">加载中</string>
