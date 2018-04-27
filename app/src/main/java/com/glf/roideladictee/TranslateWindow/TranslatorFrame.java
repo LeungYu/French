@@ -168,6 +168,37 @@ public class TranslatorFrame extends AppCompatActivity {
             }
         }.start();
     }
+    public String stringInitTranslation(){
+        final String[] setter = {""};
+        new Thread(){
+            public void run(){
+                Document doc=null;
+                try {
+                    doc = Jsoup.connect("http://www.frdic.com/mdicts/fr/"+target).get();
+                } catch (IOException e) {
+                    Message msg = new Message();
+                    setter[0] = "中文翻译获取失败";
+                    return;
+                }
+                String wordType = doc.getElementById("FCChild").getElementsByClass("cara").first().text();
+                setter[0] +=wordType+"  ";
+                Elements cnTranslations=doc.getElementById("FCChild").getElementsByClass("exp");
+                for(Element e:cnTranslations){
+                    StringBuffer temp=new StringBuffer(e.text());
+                    for(int i=0;i<temp.length();i++){
+                        if(temp.charAt(i)==' '){
+                            temp.setCharAt(i,'；');
+                        }
+                        if(temp.charAt(i)=='，'){
+                            temp.setCharAt(i,'\0');
+                        }
+                    }
+                    setter[0] +=temp;
+                }
+            }
+        }.start();
+        return setter[0];
+    }
     public void  initExample(){
         new Thread(){
             public void run(){
