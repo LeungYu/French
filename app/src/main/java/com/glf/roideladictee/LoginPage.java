@@ -2,10 +2,12 @@ package com.glf.roideladictee;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextPaint;
 import android.util.Log;
@@ -41,6 +43,8 @@ import okhttp3.Response;
 
 
 public class LoginPage extends BaseActivity {
+    SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
     LinearLayout root;
     RelativeLayout.LayoutParams root_lp;
     ImageView login_page_login_logo;
@@ -82,7 +86,7 @@ public class LoginPage extends BaseActivity {
         MeasureView.measure(root);
         initStyle();
     }
-    final Handler LaunchScreenErrorHandler = new Handler() {
+    final Handler LoginPageErrorHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -168,7 +172,7 @@ public class LoginPage extends BaseActivity {
             }
         }
     };
-    final Handler LaunchScreenVerifyCodeSendHandler = new Handler() {
+    final Handler LoginPageVerifyCodeSendHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -196,7 +200,7 @@ public class LoginPage extends BaseActivity {
             }
         }
     };
-    final Handler LaunchScreenLoaderHandler = new Handler() {
+    final Handler LoginPageLoaderHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -339,23 +343,23 @@ public class LoginPage extends BaseActivity {
                     public void run(){
                         String phone_num=login_page_phone.getText().toString();
                         if(phone_num.length()==0){
-                            LaunchScreenErrorHandler.sendEmptyMessage(0);
+                            LoginPageErrorHandler.sendEmptyMessage(0);
                             Message msgerror =new Message();
                             msgerror.obj = "phone_num_null";
-                            LaunchScreenErrorHandler.sendMessage(msgerror);
+                            LoginPageErrorHandler.sendMessage(msgerror);
                             return;
                         }
                         else if(!isMobileNum(login_page_phone.getText().toString())){
-                            LaunchScreenErrorHandler.sendEmptyMessage(0);
+                            LoginPageErrorHandler.sendEmptyMessage(0);
                             Message msgerror =new Message();
                             msgerror.obj = "phone_num_mistake";
-                            LaunchScreenErrorHandler.sendMessage(msgerror);
+                            LoginPageErrorHandler.sendMessage(msgerror);
                             return;
                         }
-                        LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                        LoginPageLoaderHandler.sendEmptyMessage(0);
                         Message loader_start = new Message();
                         loader_start.obj = "start_send";
-                        LaunchScreenLoaderHandler.sendMessage(loader_start);
+                        LoginPageLoaderHandler.sendMessage(loader_start);
                         try{
                             int time=100;
                             final OkHttpClient okHttpClient = new OkHttpClient();
@@ -383,39 +387,39 @@ public class LoginPage extends BaseActivity {
                                 else{
                                     Log.e("hahaha","错误码："+Integer.toString(first_code));
                                     network=false;
-                                    LaunchScreenErrorHandler.sendEmptyMessage(0);
+                                    LoginPageErrorHandler.sendEmptyMessage(0);
                                     Message msgerror = new Message();
                                     msgerror.obj = "get_verify_code_fail";
-                                    LaunchScreenErrorHandler.sendMessage(msgerror);
-                                    LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                                    LoginPageErrorHandler.sendMessage(msgerror);
+                                    LoginPageLoaderHandler.sendEmptyMessage(0);
                                     Message loader_end = new Message();
                                     loader_end.obj = "end_send";
-                                    LaunchScreenLoaderHandler.sendMessage(loader_end);
+                                    LoginPageLoaderHandler.sendMessage(loader_end);
                                     return;
                                 }
                             } catch (Exception e) {
                                 network=false;
                                 Log.e("hahaha","错误码："+e.toString());
-                                LaunchScreenErrorHandler.sendEmptyMessage(0);
+                                LoginPageErrorHandler.sendEmptyMessage(0);
                                 Message msgerror = new Message();
                                 msgerror.obj = "get_verify_code_fail";
-                                LaunchScreenErrorHandler.sendMessage(msgerror);
-                                LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                                LoginPageErrorHandler.sendMessage(msgerror);
+                                LoginPageLoaderHandler.sendEmptyMessage(0);
                                 Message loader_end = new Message();
                                 loader_end.obj = "end_send";
-                                LaunchScreenLoaderHandler.sendMessage(loader_end);
+                                LoginPageLoaderHandler.sendMessage(loader_end);
 
                                 return;
                             }
                             if(time>=5){
-                                LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                                LoginPageLoaderHandler.sendEmptyMessage(0);
                                 Message loader_end = new Message();
                                 loader_end.obj = "end_send";
-                                LaunchScreenLoaderHandler.sendMessage(loader_end);
-                                LaunchScreenErrorHandler.sendEmptyMessage(0);
+                                LoginPageLoaderHandler.sendMessage(loader_end);
+                                LoginPageErrorHandler.sendEmptyMessage(0);
                                 Message msgerror =new Message();
                                 msgerror.obj = "phone_num_oversend";
-                                LaunchScreenErrorHandler.sendMessage(msgerror);
+                                LoginPageErrorHandler.sendMessage(msgerror);
                                 return;
                             }
                             body = new FormBody.Builder()
@@ -434,32 +438,32 @@ public class LoginPage extends BaseActivity {
                                     network=true;
                                     Log.e("hahaha","获取成功");
                                     login_page_send_code.setOnTouchListener(null);
-                                    LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                                    LoginPageLoaderHandler.sendEmptyMessage(0);
                                     Message loader_end = new Message();
                                     loader_end.obj = "end_send";
-                                    LaunchScreenLoaderHandler.sendMessage(loader_end);
-                                    LaunchScreenVerifyCodeSendHandler.sendEmptyMessage(0);
+                                    LoginPageLoaderHandler.sendMessage(loader_end);
+                                    LoginPageVerifyCodeSendHandler.sendEmptyMessage(0);
                                     Message msgstart = new Message();
                                     msgstart.obj = "lock";
-                                    LaunchScreenVerifyCodeSendHandler.sendMessage(msgstart);
+                                    LoginPageVerifyCodeSendHandler.sendMessage(msgstart);
                                 }
                                 else {
                                     network = false;
                                     error_content="无法获取验证码，错误：" + response.code();
-                                    LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                                    LoginPageLoaderHandler.sendEmptyMessage(0);
                                     Message loader_end = new Message();
                                     loader_end.obj = "end_send";
-                                    LaunchScreenLoaderHandler.sendMessage(loader_end);
-                                    LaunchScreenErrorHandler.sendEmptyMessage(0);
+                                    LoginPageLoaderHandler.sendMessage(loader_end);
+                                    LoginPageErrorHandler.sendEmptyMessage(0);
                                     Message msgerror = new Message();
                                     msgerror.obj = "error";
-                                    LaunchScreenErrorHandler.sendMessage(msgerror);
+                                    LoginPageErrorHandler.sendMessage(msgerror);
                                 }
                             } catch (Exception e) {
-                                LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                                LoginPageLoaderHandler.sendEmptyMessage(0);
                                 Message loader_end = new Message();
                                 loader_end.obj = "end_send";
-                                LaunchScreenLoaderHandler.sendMessage(loader_end);
+                                LoginPageLoaderHandler.sendMessage(loader_end);
                                 e.printStackTrace();
                             }
 
@@ -467,15 +471,15 @@ public class LoginPage extends BaseActivity {
                                 sleep(1000);
                                 if(!network)
                                     break;
-                                LaunchScreenErrorHandler.sendEmptyMessage(0);
+                                LoginPageErrorHandler.sendEmptyMessage(0);
                                 Message msgin =new Message();
                                 msgin.obj = new Integer(i).toString();
-                                LaunchScreenVerifyCodeSendHandler.sendMessage(msgin);
+                                LoginPageVerifyCodeSendHandler.sendMessage(msgin);
                             }
-                            LaunchScreenErrorHandler.sendEmptyMessage(0);
+                            LoginPageErrorHandler.sendEmptyMessage(0);
                             Message msgend =new Message();
                             msgend.obj = "unlock";
-                            LaunchScreenVerifyCodeSendHandler.sendMessage(msgend);
+                            LoginPageVerifyCodeSendHandler.sendMessage(msgend);
                             login_page_send_code.setOnTouchListener(login_page_send_code_listener);
                         }
                         catch (Exception e)
@@ -506,31 +510,31 @@ public class LoginPage extends BaseActivity {
                 new Thread() {
                     public void run() {
                         network=false;
-                        LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                        LoginPageLoaderHandler.sendEmptyMessage(0);
                         Message loader_start = new Message();
                         loader_start.obj = "start_load";
-                        LaunchScreenLoaderHandler.sendMessage(loader_start);
+                        LoginPageLoaderHandler.sendMessage(loader_start);
                         String phone_num = login_page_phone.getText().toString();
                         String verify_code = login_page_verify.getText().toString();
                         if (login_page_phone.getText().toString().length() == 0 || login_page_verify.getText().toString().length() == 0) {
-                            LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                            LoginPageLoaderHandler.sendEmptyMessage(0);
                             Message loader_stop = new Message();
                             loader_stop.obj = "stop_load";
-                            LaunchScreenLoaderHandler.sendMessage(loader_stop);
-                            LaunchScreenErrorHandler.sendEmptyMessage(0);
+                            LoginPageLoaderHandler.sendMessage(loader_stop);
+                            LoginPageErrorHandler.sendEmptyMessage(0);
                             Message msgerror = new Message();
                             msgerror.obj = "phone_num_or_code_null";
-                            LaunchScreenErrorHandler.sendMessage(msgerror);
+                            LoginPageErrorHandler.sendMessage(msgerror);
                             return;
                         } else if (!isMobileNum(login_page_phone.getText().toString())) {
-                            LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                            LoginPageLoaderHandler.sendEmptyMessage(0);
                             Message loader_stop = new Message();
                             loader_stop.obj = "stop_load";
-                            LaunchScreenLoaderHandler.sendMessage(loader_stop);
-                            LaunchScreenErrorHandler.sendEmptyMessage(0);
+                            LoginPageLoaderHandler.sendMessage(loader_stop);
+                            LoginPageErrorHandler.sendEmptyMessage(0);
                             Message msgerror = new Message();
                             msgerror.obj = "phone_num_mistake";
-                            LaunchScreenErrorHandler.sendMessage(msgerror);
+                            LoginPageErrorHandler.sendMessage(msgerror);
                             return;
                         }
                         boolean verify_code_exist = false;
@@ -575,6 +579,11 @@ public class LoginPage extends BaseActivity {
                                         network=true;
                                         login_user = phone_num;
                                         System.out.println(login_getInfo);
+                                        sharedpreferences= PreferenceManager.getDefaultSharedPreferences(LoginPage.this);
+                                        editor=sharedpreferences.edit();
+                                        editor.clear();
+                                        editor.putString("CurrentAccount",phone_num);
+                                        editor.apply();
                                         if (login_getInfo.equals("1")) {
                                             System.out.println("goto IndexPage");
                                             is_new_user = false;
@@ -582,72 +591,72 @@ public class LoginPage extends BaseActivity {
                                             System.out.println("goto NewLoginPage");
                                             is_new_user = true;
                                         }
-                                        LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                                        LoginPageLoaderHandler.sendEmptyMessage(0);
                                         Message loader_stop = new Message();
                                         loader_stop.obj = "stop_load";
-                                        LaunchScreenLoaderHandler.sendMessage(loader_stop);
+                                        LoginPageLoaderHandler.sendMessage(loader_stop);
                                     } else {
                                         System.out.println("登陆检查失败");
                                         network = false;
-                                        LaunchScreenErrorHandler.sendEmptyMessage(0);
+                                        LoginPageErrorHandler.sendEmptyMessage(0);
                                         Message msgerror = new Message();
                                         msgerror.obj = "server_expection";
-                                        LaunchScreenErrorHandler.sendMessage(msgerror);
-                                        LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                                        LoginPageErrorHandler.sendMessage(msgerror);
+                                        LoginPageLoaderHandler.sendEmptyMessage(0);
                                         Message loader_stop = new Message();
                                         loader_stop.obj = "stop_load";
-                                        LaunchScreenLoaderHandler.sendMessage(loader_stop);
+                                        LoginPageLoaderHandler.sendMessage(loader_stop);
                                         return;
                                     }
                                 }
                             } else {
                                 System.out.println("http://fr.xsinweb.com/fr/service/Check_Verify_Code.php的code");
                                 network=false;
-                                LaunchScreenErrorHandler.sendEmptyMessage(0);
+                                LoginPageErrorHandler.sendEmptyMessage(0);
                                 Message msgerror = new Message();
                                 msgerror.obj = "access_fail";
-                                LaunchScreenErrorHandler.sendMessage(msgerror);
-                                LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                                LoginPageErrorHandler.sendMessage(msgerror);
+                                LoginPageLoaderHandler.sendEmptyMessage(0);
                                 Message loader_stop = new Message();
                                 loader_stop.obj = "stop_load";
-                                LaunchScreenLoaderHandler.sendMessage(loader_stop);
+                                LoginPageLoaderHandler.sendMessage(loader_stop);
                                 return;
                             }
                         } catch (Exception e) {
                             System.out.println("捕获到异常");
                             Log.e("hahaha", e.toString());
-                            LaunchScreenErrorHandler.sendEmptyMessage(0);
+                            LoginPageErrorHandler.sendEmptyMessage(0);
                             Message msgerror = new Message();
                             msgerror.obj = "access_fail";
-                            LaunchScreenErrorHandler.sendMessage(msgerror);
-                            LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                            LoginPageErrorHandler.sendMessage(msgerror);
+                            LoginPageLoaderHandler.sendEmptyMessage(0);
                             Message loader_stop = new Message();
                             loader_stop.obj = "stop_load";
-                            LaunchScreenLoaderHandler.sendMessage(loader_stop);
+                            LoginPageLoaderHandler.sendMessage(loader_stop);
                             return;
                         }
-                        LaunchScreenLoaderHandler.sendEmptyMessage(0);
+                        LoginPageLoaderHandler.sendEmptyMessage(0);
                         Message loader_stop = new Message();
                         loader_stop.obj = "stop_load";
-                        LaunchScreenLoaderHandler.sendMessage(loader_stop);
+                        LoginPageLoaderHandler.sendMessage(loader_stop);
                         if (!verify_code_exist) {
-                            LaunchScreenErrorHandler.sendEmptyMessage(0);
+                            LoginPageErrorHandler.sendEmptyMessage(0);
                             Message msgerror = new Message();
                             msgerror.obj = "verify_code_error";
-                            LaunchScreenErrorHandler.sendMessage(msgerror);
+                            LoginPageErrorHandler.sendMessage(msgerror);
                         } else if (!verify_code_available) {
-                            LaunchScreenErrorHandler.sendEmptyMessage(0);
+                            LoginPageErrorHandler.sendEmptyMessage(0);
                             Message msgerror = new Message();
                             msgerror.obj = "verify_code_over_time";
-                            LaunchScreenErrorHandler.sendMessage(msgerror);
+                            LoginPageErrorHandler.sendMessage(msgerror);
                         } else {/*后台：此处补充登陆操作*/
                             if (network) {
                                 AlertDialogOn=true;
                                 error_content=getResources().getString(R.string.login_page_login_success);
-                                LaunchScreenErrorHandler.sendEmptyMessage(0);
+                                LoginPageErrorHandler.sendEmptyMessage(0);
                                 Message msgerror = new Message();
                                 msgerror.obj = "tips";
-                                LaunchScreenErrorHandler.sendMessage(msgerror);
+                                LoginPageErrorHandler.sendMessage(msgerror);
                                 isLogin=true;
                                 if(is_new_user){
                                     Log.e("hahaha","goto NewLoginPage");
@@ -679,10 +688,10 @@ public class LoginPage extends BaseActivity {
                                     e.printStackTrace();
                                 }
                             } else {
-                                LaunchScreenErrorHandler.sendEmptyMessage(0);
+                                LoginPageErrorHandler.sendEmptyMessage(0);
                                 Message msgerror = new Message();
                                 msgerror.obj = "login_fail";
-                                LaunchScreenErrorHandler.sendMessage(msgerror);
+                                LoginPageErrorHandler.sendMessage(msgerror);
                             }
                         }
                     }
