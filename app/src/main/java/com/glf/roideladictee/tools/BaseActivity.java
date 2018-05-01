@@ -10,10 +10,12 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -23,14 +25,7 @@ import java.util.List;
 
 public class BaseActivity extends AppCompatActivity {
     protected static boolean isLogin=false;
-    public static String version_name;
-    public static String user_agent;
-    public static String http_username;
-    public static String http_password;
-    protected LinearLayout rootLayout;
     protected static String login_user;
-    public Boolean isDepartureOn=false;
-    protected String ONLY_ID="";
     protected ActivityController activityController;
     protected HomeWatcherReceiver homewatcherreceiver;
     protected static NotificationManager myManager;
@@ -148,5 +143,84 @@ public class BaseActivity extends AppCompatActivity {
         //在这个生命周期中销毁所有的Activity
         activityController.removeActivity(this);
         super.onDestroy();
+    }
+
+    public static void setAllEnabled(View view, boolean enabled) {
+        if (null == view) {
+            return;
+        }
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            LinkedList<ViewGroup> queue = new LinkedList<ViewGroup>();
+            queue.add(viewGroup);
+            // 遍历viewGroup
+            while (!queue.isEmpty()) {
+                ViewGroup current = queue.removeFirst();
+                if (/*current.getId()!= R.id.custom_departure_page_2_departure_info_start_address*/true) {
+                    current.setEnabled(enabled);
+                    for (int i = 0; i < current.getChildCount(); i++) {
+                        if (current.getChildAt(i) instanceof ViewGroup) {
+                            queue.addLast((ViewGroup) current.getChildAt(i));
+                        } else {
+                            if (/*current.getChildAt(i).getId()!=R.id.custom_departure_page_2_departure_info_start_address*/true) {
+                                current.getChildAt(i).setEnabled(enabled);
+                            }
+                        }
+                    }
+                } else {
+                    if (/*view.getId()!=R.id.custom_departure_page_2_departure_info_start_address*/true) {
+                        view.setEnabled(enabled);
+                    }
+                }
+            }
+        }
+    }
+    public static void setAllVisible(View view, boolean enabled) {
+        if(null == view) {
+            return;
+        }
+        if(view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            LinkedList<ViewGroup> queue = new LinkedList<ViewGroup>();
+            queue.add(viewGroup);
+            // 遍历viewGroup
+            while(!queue.isEmpty()) {
+                ViewGroup current = queue.removeFirst();
+                current.setVisibility(enabled?View.VISIBLE:View.INVISIBLE);
+                for(int i = 0; i < current.getChildCount(); i ++) {
+                    if(current.getChildAt(i) instanceof ViewGroup) {
+                        queue.addLast((ViewGroup) current.getChildAt(i));
+                    }else {
+                        current.getChildAt(i).setVisibility(enabled?View.VISIBLE:View.INVISIBLE);
+                    }
+                }
+            }
+        }else {
+            view.setVisibility(enabled?View.VISIBLE:View.INVISIBLE);
+        }
+    }
+    public static void setAllClickable(View view, boolean enabled) {
+        if(null == view) {
+            return;
+        }
+        if(view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            LinkedList<ViewGroup> queue = new LinkedList<ViewGroup>();
+            queue.add(viewGroup);
+            // 遍历viewGroup
+            while(!queue.isEmpty()) {
+                ViewGroup current = queue.removeFirst();
+                current.setClickable(enabled);
+                for(int i = 0; i < current.getChildCount(); i ++) {
+                    if(current.getChildAt(i) instanceof ViewGroup) {
+                        queue.addLast((ViewGroup) current.getChildAt(i));
+                    }else {
+                        current.getChildAt(i).setClickable(enabled);
+                    }
+                }
+            }
+        }else {
+            view.setClickable(enabled);
+        }
     }
 }

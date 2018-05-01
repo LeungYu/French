@@ -1,5 +1,35 @@
 <resources>
     <string name="app_name">影听</string>
+    <!--launch_page-->
+    <string name="launch_page_version">V 1.0</string>
+    <string name="launch_screen_copyright">Copyright©2018 GLF</string>
+    <!--login_page-->
+    <string name="login_page_login_title">影听~您的法语学习专家</string>
+    <string name="login_page_phone_title">手机： </string>
+    <string name="login_page_verify_title">验证码： </string>
+    <string name="login_page_send_code">发送验证码</string>
+    <string name="login_page_send_code_ing">正在发送</string>
+    <string name="login_page_send_code_wait_1">重新发送(</string>
+    <string name="login_page_send_code_wait_2">秒后)</string>
+    <string name="login_page_error_0">验证码错误</string>
+    <string name="login_page_error_1">手机号为空</string>
+    <string name="login_page_error_2">该手机号获取验证码次数达到当天上限</string>
+    <string name="login_page_error_3">手机号或验证码为空</string>
+    <string name="login_page_error_4">手机号格式不正确或不支持</string>
+    <string name="login_page_error_5">验证码不正确</string>
+    <string name="login_page_error_6">验证码已过期</string>
+    <string name="login_page_error_7">获取验证码失败，没有网络连接</string>
+    <string name="login_page_error_8">服务器异常</string>
+    <string name="login_page_error_9">登录失败</string>
+    <string name="login_page_error_10">连接失败</string>
+    <string name="login_page_dialog_title_1">提示</string>
+    <string name="login_page_dialog_title_2">错误</string>
+    <string name="login_page_dialog_ok">确定</string>
+    <string name="login_page_login">登   陆</string>
+    <string name="login_page_login_success">登陆成功！</string>
+    <string name="first_time_name_title">姓名： </string>
+    <string name="first_time_school_title">学校名称： </string>
+    <!--translate_frame-->
     <string name="translate_frame_title">哎哟，您写错啦！</string>
     <string name="translate_frame_main_example_title">例句：</string>
     <string name="translate_frame_loading">加载中</string>

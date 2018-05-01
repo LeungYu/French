@@ -1,15 +1,19 @@
 package com.glf.roideladictee.TranslateWindow;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextPaint;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -29,16 +33,27 @@ import java.io.IOException;
 public class TranslatorFrame extends AppCompatActivity {
     protected String target="";
     LinearLayout translate_frame_border;
+    FrameLayout.LayoutParams translate_frame_border_lp;
     LinearLayout translate_frame_title_border;
+    RelativeLayout.LayoutParams translate_frame_title_border_lp;
     TextView translate_frame_title;
+    LinearLayout.LayoutParams translate_frame_title_lp;
     LinearLayout translate_frame_exit_border;
+    RelativeLayout.LayoutParams translate_frame_exit_border_lp;
     ImageView translate_frame_exit;
+    LinearLayout.LayoutParams translate_frame_exit_lp;
     LinearLayout translate_frame_blank;
+    RelativeLayout.LayoutParams translate_frame_blank_lp;
     ScrollView translate_frame_main_border;
+    RelativeLayout.LayoutParams translate_frame_main_border_lp;
     TextView translate_frame_main_fr;
+    LinearLayout.LayoutParams translate_frame_main_fr_lp;
     TextView translate_frame_main_zh;
+    LinearLayout.LayoutParams translate_frame_main_zh_lp;
     TextView translate_frame_main_example_title;
+    LinearLayout.LayoutParams translate_frame_main_example_title_lp;
     TextView translate_frame_main_example;
+    LinearLayout.LayoutParams translate_frame_main_example_lp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +67,40 @@ public class TranslatorFrame extends AppCompatActivity {
         initExample();
     }
     public void initStyle(){
+        Typeface YAHEI =Typeface.createFromAsset(getAssets(), "fonts/YAHEI.ttc");
+        Typeface SEGOEUI =Typeface.createFromAsset(getAssets(), "fonts/SEGOEUI.ttf");
         translate_frame_border=(LinearLayout)findViewById(R.id.translate_frame_border);
+        translate_frame_border_lp = (FrameLayout.LayoutParams) translate_frame_border.getLayoutParams();
         translate_frame_title_border=(LinearLayout)findViewById(R.id.translate_frame_title_border);
+        translate_frame_title_border_lp = (RelativeLayout.LayoutParams) translate_frame_title_border.getLayoutParams();
         translate_frame_title=(TextView)findViewById(R.id.translate_frame_title);
+        TextPaint translate_frame_title_paint = translate_frame_title.getPaint();
+        translate_frame_title_paint.setTypeface(YAHEI);
+        translate_frame_title_lp = (LinearLayout.LayoutParams) translate_frame_title.getLayoutParams();
         translate_frame_exit_border=(LinearLayout)findViewById(R.id.translate_frame_exit_border);
+        translate_frame_exit_border_lp = (RelativeLayout.LayoutParams) translate_frame_exit_border.getLayoutParams();
         translate_frame_exit=(ImageView)findViewById(R.id.translate_frame_exit);
+        translate_frame_exit_lp = (LinearLayout.LayoutParams) translate_frame_exit.getLayoutParams();
         translate_frame_blank=(LinearLayout)findViewById(R.id.translate_frame_blank);
+        translate_frame_blank_lp = (RelativeLayout.LayoutParams) translate_frame_blank.getLayoutParams();
         translate_frame_main_border=(ScrollView)findViewById(R.id.translate_frame_main_border);
+        translate_frame_main_border_lp = (RelativeLayout.LayoutParams) translate_frame_main_border.getLayoutParams();
         translate_frame_main_fr=(TextView)findViewById(R.id.translate_frame_main_fr);
+        TextPaint translate_frame_main_fr_paint = translate_frame_main_fr.getPaint();
+        translate_frame_main_fr_paint.setTypeface(SEGOEUI);
+        translate_frame_main_fr_lp = (LinearLayout.LayoutParams) translate_frame_main_fr.getLayoutParams();
         translate_frame_main_zh=(TextView)findViewById(R.id.translate_frame_main_zh);
+        TextPaint translate_frame_main_zh_paint = translate_frame_main_zh.getPaint();
+        translate_frame_main_zh_paint.setTypeface(YAHEI);
+        translate_frame_main_zh_lp = (LinearLayout.LayoutParams) translate_frame_main_zh.getLayoutParams();
         translate_frame_main_example_title=(TextView)findViewById(R.id.translate_frame_main_example_title);
+        TextPaint translate_frame_main_example_title_paint = translate_frame_main_example_title.getPaint();
+        translate_frame_main_example_title_paint.setTypeface(YAHEI);
+        translate_frame_main_example_title_lp = (LinearLayout.LayoutParams) translate_frame_main_example_title.getLayoutParams();
         translate_frame_main_example=(TextView)findViewById(R.id.translate_frame_main_example);
+        TextPaint translate_frame_main_example_paint = translate_frame_main_example.getPaint();
+        translate_frame_main_example_paint.setTypeface(YAHEI);
+        translate_frame_main_example_lp = (LinearLayout.LayoutParams) translate_frame_main_example.getLayoutParams();
         //绑定退出按钮
         translate_frame_exit.setOnTouchListener(new View.OnTouchListener() {
             @Override
