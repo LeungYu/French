@@ -36,9 +36,19 @@
     <string name="translate_frame_loading">加载中</string>
     <!--new_login_page-->
     <string name="new_login_page_title">设置个人资料</string>
+    <string name="new_login_page_tips">第一次登陆请输入个人信息</string>
     <string name="new_login_page_schoool_name_title">学校名称：</string>
     <string name="new_login_page_real_name_title">真实姓名：</string>
     <string name="new_login_page_clear_content">清   空</string>
     <string name="new_login_page_submit">提   交</string>
     <string name="new_login_page_error_0">输入不能为空</string>
+    <string name="new_login_page_error_1">服务器异常</string>
+    <!--index_page-->
+    <string name="index_page_title">当前用户：</string>
+    <string name="index_page_practise">练习模式</string>
+    <string name="index_page_contest">比赛模式</string>
+    <string name="index_page_join">比赛报名</string>
+    <string name="index_page_book">生词本</string>
+    <string name="index_page_exit">退   出</string>
+    <string name="index_page_sign_off">注销登录</string>
 </resources>
