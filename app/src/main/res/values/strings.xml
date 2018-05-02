@@ -7,6 +7,7 @@
     <string name="login_page_login_title">影听~您的法语学习专家</string>
     <string name="login_page_phone_title">手机： </string>
     <string name="login_page_verify_title">验证码： </string>
+    <string name="login_page_language_title">语言： </string>
     <string name="login_page_send_code">发送验证码</string>
     <string name="login_page_send_code_ing">正在发送</string>
     <string name="login_page_send_code_wait_1">重新发送(</string>
@@ -33,4 +34,11 @@
     <string name="translate_frame_title">哎哟，您写错啦！</string>
     <string name="translate_frame_main_example_title">例句：</string>
     <string name="translate_frame_loading">加载中</string>
+    <!--new_login_page-->
+    <string name="new_login_page_title">设置个人资料</string>
+    <string name="new_login_page_schoool_name_title">学校名称：</string>
+    <string name="new_login_page_real_name_title">真实姓名：</string>
+    <string name="new_login_page_clear_content">清   空</string>
+    <string name="new_login_page_submit">提   交</string>
+    <string name="new_login_page_error_0">输入不能为空</string>
 </resources>

@@ -24,6 +24,7 @@ import java.util.List;
 
 
 public class BaseActivity extends AppCompatActivity {
+    protected static boolean isFirst=true;
     protected static boolean isLogin=false;
     protected static String login_user;
     protected ActivityController activityController;

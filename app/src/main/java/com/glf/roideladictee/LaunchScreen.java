@@ -18,14 +18,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.glf.roideladictee.tools.BaseActivity;
+import com.glf.roideladictee.tools.LocaleUtils;
 import com.glf.roideladictee.tools.MeasureView;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.glf.roideladictee.tools.LocaleUtils.LOCALE_CHINESE;
 
 public class LaunchScreen extends BaseActivity {
     SharedPreferences sharedpreferences;
@@ -86,6 +90,23 @@ public class LaunchScreen extends BaseActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_screen);
+        //辨别语言
+        Locale loc = LocaleUtils.getUserLocale(this);
+        System.out.println("当前语言："+LocaleUtils.getUserLocale(this));
+        if(isFirst){
+            System.out.println("初次设置语言：");
+            isFirst=false;
+            if (loc.equals(Locale.CHINESE)){
+                System.out.println("设置中文");
+                LocaleUtils.updateLocale(LaunchScreen.this, LOCALE_CHINESE);
+                LaunchScreen.this.restartAct();
+            }
+            else if(loc.equals(Locale.FRENCH)){
+                System.out.println("设置法语");
+                LocaleUtils.updateLocale(LaunchScreen.this, LocaleUtils.LOCALE_FRENCH);
+                LaunchScreen.this.restartAct();
+            }
+        }
         root=(LinearLayout)findViewById(R.id.launch_screen_root);
         root_lp = (RelativeLayout.LayoutParams) root.getLayoutParams();
         //测量宽高
@@ -107,6 +128,11 @@ public class LaunchScreen extends BaseActivity {
                     startActivity(Login_Page_Activity);
                 }
                 else{
+                    try {
+                        sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     final OkHttpClient okHttpClient = new OkHttpClient();
                     FormBody body = new FormBody.Builder()
                             .add("phone_num", phone_num)
@@ -146,12 +172,6 @@ public class LaunchScreen extends BaseActivity {
                         e.printStackTrace();
                     }
                     if (network) {
-                        AlertDialogOn=true;
-                        error_content=getResources().getString(R.string.login_page_login_success);
-                        LaunchScreenErrorHandler.sendEmptyMessage(0);
-                        Message msgerror = new Message();
-                        msgerror.obj = "tips";
-                        LaunchScreenErrorHandler.sendMessage(msgerror);
                         isLogin=true;
                         if(is_new_user){
                             Log.e("hahaha","goto NewLaunchScreen");
@@ -197,5 +217,15 @@ public class LaunchScreen extends BaseActivity {
         launch_screen_copyright_lp=(LinearLayout.LayoutParams) launch_screen_copyright.getLayoutParams();
         TextPaint launch_screen_copyright_paint = launch_screen_copyright.getPaint();
         launch_screen_copyright_paint.setTypeface(YAHEI);
+    }
+    /**
+     * 重启当前Activity
+     */
+    private void restartAct() {
+        finish();
+        Intent _Intent = new Intent(this, LaunchScreen.class);
+        startActivity(_Intent);
+        //清除Activity退出和进入的动画
+        overridePendingTransition(0, 0);
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.text.TextPaint;
 import android.util.Log;
@@ -19,6 +20,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,12 +31,14 @@ import com.glf.roideladictee.Json.Check_Verify_Code_Json;
 import com.glf.roideladictee.Json.Get_Phone_Num_Time_Json;
 import com.glf.roideladictee.metroloading.MetroLoadingView;
 import com.glf.roideladictee.tools.BaseActivity;
+import com.glf.roideladictee.tools.LocaleUtils;
 import com.glf.roideladictee.tools.MeasureView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,6 +46,10 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.glf.roideladictee.tools.LocaleUtils.LOCALE_CHINESE;
+import static java.util.Locale.CHINESE;
+import static java.util.Locale.FRENCH;
 
 
 public class LoginPage extends BaseActivity {
@@ -61,6 +71,14 @@ public class LoginPage extends BaseActivity {
     LinearLayout.LayoutParams login_page_verify_lp;
     Button login_page_send_code;
     LinearLayout.LayoutParams login_page_send_code_lp;
+    RadioGroup login_page_language;
+    LinearLayout.LayoutParams login_page_language_lp;
+    TextView login_page_language_title;
+    LinearLayout.LayoutParams login_page_language_title_lp;
+    RadioButton login_page_language_zh;
+    LinearLayout.LayoutParams login_page_language_zh_lp;
+    RadioButton login_page_language_fr;
+    LinearLayout.LayoutParams login_page_language_fr_lp;
     Button login_page_login;
     LinearLayout.LayoutParams login_page_login_lp;
     TextView login_page_error;
@@ -244,47 +262,74 @@ public class LoginPage extends BaseActivity {
             }
         }
     };
-    public void initStyle(){
-        Typeface YAHEI =Typeface.createFromAsset(getAssets(), "fonts/YAHEI.ttc");
-        Typeface YOUYUAN =Typeface.createFromAsset(getAssets(), "fonts/YOUYUAN.TTF");
-        login_page_login_logo=(ImageView) findViewById(R.id.login_page_login_logo);
-        login_page_login_logo_lp=(LinearLayout.LayoutParams) login_page_login_logo.getLayoutParams();
-        login_page_login_title=(TextView) findViewById(R.id.login_page_login_title);
+    public void initStyle() {
+        Typeface YAHEI = Typeface.createFromAsset(getAssets(), "fonts/YAHEI.ttc");
+        Typeface YOUYUAN = Typeface.createFromAsset(getAssets(), "fonts/YOUYUAN.TTF");
+        login_page_login_logo = (ImageView) findViewById(R.id.login_page_login_logo);
+        login_page_login_logo_lp = (LinearLayout.LayoutParams) login_page_login_logo.getLayoutParams();
+        login_page_login_title = (TextView) findViewById(R.id.login_page_login_title);
         TextPaint login_page_login_title_paint = login_page_login_title.getPaint();
         login_page_login_title_paint.setTypeface(YOUYUAN);
-        login_page_login_title_lp=(LinearLayout.LayoutParams) login_page_login_title.getLayoutParams();
-        login_page_phone_title=(TextView) findViewById(R.id.login_page_phone_title);
+        login_page_login_title_lp = (LinearLayout.LayoutParams) login_page_login_title.getLayoutParams();
+        login_page_phone_title = (TextView) findViewById(R.id.login_page_phone_title);
         TextPaint login_page_phone_title_paint = login_page_phone_title.getPaint();
         login_page_phone_title_paint.setTypeface(YAHEI);
-        login_page_phone_title_lp=(LinearLayout.LayoutParams) login_page_phone_title.getLayoutParams();
-        login_page_phone=(EditText) findViewById(R.id.login_page_phone);
+        login_page_phone_title_lp = (LinearLayout.LayoutParams) login_page_phone_title.getLayoutParams();
+        login_page_phone = (EditText) findViewById(R.id.login_page_phone);
         TextPaint login_page_phone_paint = login_page_phone.getPaint();
         login_page_phone_paint.setTypeface(YAHEI);
-        login_page_phone_lp=(LinearLayout.LayoutParams) login_page_phone.getLayoutParams();;
-        login_page_verify_title=(TextView) findViewById(R.id.login_page_verify_title);
+        login_page_phone_lp = (LinearLayout.LayoutParams) login_page_phone.getLayoutParams();
+        login_page_verify_title = (TextView) findViewById(R.id.login_page_verify_title);
         TextPaint login_page_verify_title_paint = login_page_verify_title.getPaint();
         login_page_verify_title_paint.setTypeface(YAHEI);
-        login_page_verify_title_lp=(LinearLayout.LayoutParams) login_page_verify_title.getLayoutParams();;
-        login_page_verify=(EditText) findViewById(R.id.login_page_verify);
+        login_page_verify_title_lp = (LinearLayout.LayoutParams) login_page_verify_title.getLayoutParams();
+        login_page_verify = (EditText) findViewById(R.id.login_page_verify);
         TextPaint login_page_verify_paint = login_page_verify.getPaint();
         login_page_verify_paint.setTypeface(YAHEI);
-        login_page_verify_lp=(LinearLayout.LayoutParams) login_page_verify.getLayoutParams();;
-        login_page_send_code=(Button) findViewById(R.id.login_page_send_code);
+        login_page_verify_lp = (LinearLayout.LayoutParams) login_page_verify.getLayoutParams();
+        login_page_language = (RadioGroup) findViewById(R.id.login_page_language);
+        login_page_language_lp = (LinearLayout.LayoutParams) login_page_language.getLayoutParams();
+        login_page_language_title = (TextView) findViewById(R.id.login_page_language_title);
+        TextPaint login_page_language_title_paint = login_page_language_title.getPaint();
+        login_page_language_title_paint.setTypeface(YAHEI);
+        login_page_language_title_lp = (LinearLayout.LayoutParams) login_page_language_title.getLayoutParams();
+        login_page_language_zh = (RadioButton) findViewById(R.id.login_page_language_zh);
+        TextPaint login_page_language_zh_paint = login_page_language_zh.getPaint();
+        login_page_language_zh_paint.setTypeface(YAHEI);
+        login_page_language_zh_lp = (LinearLayout.LayoutParams) login_page_language_zh.getLayoutParams();
+        login_page_language_fr = (RadioButton) findViewById(R.id.login_page_language_fr);
+        TextPaint login_page_language_fr_paint = login_page_language_fr.getPaint();
+        login_page_language_fr_paint.setTypeface(YAHEI);
+        login_page_language_fr_lp = (LinearLayout.LayoutParams) login_page_language_fr.getLayoutParams();
+        login_page_send_code = (Button) findViewById(R.id.login_page_send_code);
         TextPaint login_page_send_code_paint = login_page_send_code.getPaint();
         login_page_send_code_paint.setTypeface(YAHEI);
-        login_page_send_code_lp=(LinearLayout.LayoutParams) login_page_send_code.getLayoutParams();;
-        login_page_login=(Button) findViewById(R.id.login_page_login);
+        login_page_send_code_lp = (LinearLayout.LayoutParams) login_page_send_code.getLayoutParams();
+        login_page_login = (Button) findViewById(R.id.login_page_login);
         TextPaint login_page_login_paint = login_page_login.getPaint();
         login_page_login_paint.setTypeface(YAHEI);
-        login_page_login_lp=(LinearLayout.LayoutParams) login_page_login.getLayoutParams();;
-        login_page_error=(TextView) findViewById(R.id.login_page_error);
+        login_page_login_lp = (LinearLayout.LayoutParams) login_page_login.getLayoutParams();
+        login_page_error = (TextView) findViewById(R.id.login_page_error);
         TextPaint login_page_error_paint = login_page_error.getPaint();
         login_page_error_paint.setTypeface(YAHEI);
-        login_page_error_lp=(LinearLayout.LayoutParams) login_page_error.getLayoutParams();;
-        login_page_loading_bar_container=(LinearLayout) findViewById(R.id.login_page_loading_bar_container);
-        login_page_loading_bar_container_lp=(RelativeLayout.LayoutParams) login_page_loading_bar_container.getLayoutParams();;
-        login_page_loading_bar=(MetroLoadingView) findViewById(R.id.login_page_loading_bar);
-        login_page_loading_bar_lp=(LinearLayout.LayoutParams) login_page_loading_bar.getLayoutParams();;
+        login_page_error_lp = (LinearLayout.LayoutParams) login_page_error.getLayoutParams();
+        login_page_loading_bar_container = (LinearLayout) findViewById(R.id.login_page_loading_bar_container);
+        login_page_loading_bar_container_lp = (RelativeLayout.LayoutParams) login_page_loading_bar_container.getLayoutParams();
+        login_page_loading_bar = (MetroLoadingView) findViewById(R.id.login_page_loading_bar);
+        login_page_loading_bar_lp = (LinearLayout.LayoutParams) login_page_loading_bar.getLayoutParams();
+        //辨别语言
+        Locale loc = LocaleUtils.getUserLocale(this);
+        System.out.println("当前语言："+loc);
+        if (loc.equals(CHINESE)){
+            System.out.println("设置中文按钮");
+            login_page_language_fr.setChecked(false);
+            login_page_language_zh.setChecked(true);
+        }
+        else if(loc.equals(FRENCH)){
+            System.out.println("设置法语按钮");
+            login_page_language_fr.setChecked(true);
+            login_page_language_zh.setChecked(false);
+        }
         //绑定按钮
         login_page_phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -305,6 +350,26 @@ public class LoginPage extends BaseActivity {
                     login_page_verify.setAlpha(1);
                 } else {
                     login_page_verify.setAlpha((float)0.65);
+                }
+            }
+        });
+        login_page_language.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                switch (checkedId) {
+                    case R.id.login_page_language_zh:
+                        if (LocaleUtils.needUpdateLocale(LoginPage.this, LOCALE_CHINESE)) {
+                            LocaleUtils.updateLocale(LoginPage.this, LOCALE_CHINESE);
+                            LoginPage.this.restartAct();
+                        }
+                        break;
+                    case R.id.login_page_language_fr:
+                        if (LocaleUtils.needUpdateLocale(LoginPage.this, LocaleUtils.LOCALE_FRENCH)) {
+                            LocaleUtils.updateLocale(LoginPage.this, LocaleUtils.LOCALE_FRENCH);
+                            LoginPage.this.restartAct();
+                        }
+                        break;
+                    default:break;
                 }
             }
         });
@@ -712,5 +777,16 @@ public class LoginPage extends BaseActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 重启当前Activity
+     */
+    private void restartAct() {
+        finish();
+        Intent _Intent = new Intent(this, LoginPage.class);
+        startActivity(_Intent);
+        //清除Activity退出和进入的动画
+        overridePendingTransition(0, 0);
     }
 }
