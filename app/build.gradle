@@ -18,6 +18,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+    }
 }
 
 dependencies {
@@ -29,8 +32,14 @@ dependencies {
     //compile files('libs/okhttp-3.2.0.jar')
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:percent:24.0.0'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile 'org.apache.httpcomponents:httpcore:4.4.4'
+    compile 'org.litepal.android:core:1.4.1'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.google.code.gson:gson-parent:2.6.2'
     compile 'com.google.code.gson:gson:2.6.2'
     testCompile 'junit:junit:4.12'
+    compile files('libs/jsoup-1.11.3.jar')
+    compile files('libs/okhttp-3.2.0.jar')
 }
