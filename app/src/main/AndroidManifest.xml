@@ -20,7 +20,7 @@
             android:screenOrientation="landscape"/>
         <activity android:name=".LoginPage" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait"></activity>
         <activity android:name=".NewLoginPage" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait"/>
-        <activity android:name=".IndexPage" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait"/>
+        <activity android:name=".IndexPage" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait" android:launchMode="singleInstance"/>
         <activity android:name=".VideoAddNewWord"
             android:theme="@style/MyVideoStyle"
             android:screenOrientation="landscape"
@@ -35,5 +35,4 @@
         <activity android:name=".TestResult" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait"/>
         <activity android:name=".ResourcesPicker" />
     </application>
-
 </manifest>

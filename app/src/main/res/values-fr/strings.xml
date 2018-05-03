@@ -4,7 +4,7 @@
     <string name="launch_page_version">V 1.0</string>
     <string name="launch_screen_copyright">Copyright©2018 GLF</string>
     <!--login_page-->
-    <string name="login_page_login_title">YINGTIN\nVotre expert d\'étudier français</string>
+    <string name="login_page_login_title">YINGTIN\nVotre expert pour étudier le français</string>
     <string name="login_page_phone_title">Téléphone: </string>
     <string name="login_page_verify_title">Code de\nvérification: </string>
     <string name="login_page_language_title">Langue: </string>
@@ -13,56 +13,59 @@
     <string name="login_page_send_code_wait_1">Envoyer encore(</string>
     <string name="login_page_send_code_wait_2"> Après seconde(s))</string>
     <string name="login_page_error_0">Code de vérification incorrect</string>
-    <string name="login_page_error_1">Numéro de téléphone est vide</string>
-    <string name="login_page_error_2">Nombre de fois d\'obtenir un code de vérification atteint le nombre de la limite supérieure le même jour</string>
-    <string name="login_page_error_3">Numéro de téléphone ou le code de vérification est vide</string>
-    <string name="login_page_error_4">Le format du numéro de téléphone est incorrect ou non supporté</string>
+    <string name="login_page_error_1">Numéro de téléphone invalide</string>
+    <string name="login_page_error_2">Nombre de fois d\'obtenir un code de vérification atteint nombre limité de fois</string>
+    <string name="login_page_error_3">Numéro de téléphone ou le code de vérification est invalide</string>
+    <string name="login_page_error_4">Le format du numéro de téléphone est incorrect ou incompatible</string>
     <string name="login_page_error_5">Code de vérification incorrect</string>
-    <string name="login_page_error_6">Code de vérification a expiré</string>
-    <string name="login_page_error_7">Echec d\'obtenir le code de vérification</string>
-    <string name="login_page_error_8">Exception de serveur</string>
+    <string name="login_page_error_6">Code de vérification est expiré</string>
+    <string name="login_page_error_7">Echec d\'obtenir le code de vérification, pas de réseau</string>
+    <string name="login_page_error_8">Serveur en panne</string>
     <string name="login_page_error_9">Echec de la connexion</string>
     <string name="login_page_error_10">Echec de la connexion</string>
-    <string name="login_page_dialog_title_1">Remarque</string>
+    <string name="login_page_dialog_title_1">Rappel</string>
     <string name="login_page_dialog_title_2">Erreur</string>
     <string name="login_page_dialog_ok">OK</string>
+    <string name="login_page_dialog_cancel">Annuler</string>
     <string name="login_page_login">Se connecter</string>
     <string name="login_page_login_success">Réussite de la connexion!</string>
     <string name="first_time_name_title">Nom: </string>
     <string name="first_time_school_title">Nom de l\'université: </string>
     <!--translate_frame-->
-    <string name="translate_frame_title">C\'est incorrect!</string>
+    <string name="translate_frame_title">Incorrect!</string>
     <string name="translate_frame_main_example_title">Exemples:</string>
     <string name="translate_frame_loading">En cours de chargement</string>
     <!--new_login_page-->
-    <string name="new_login_page_title">Configurer les données personnelles</string>
-    <string name="new_login_page_tips">Vous êtes nouveau? S\'inscrire</string>
+    <string name="new_login_page_title">Configurer le profil personnel</string>
+    <string name="new_login_page_tips">S\'inscrire</string>
     <string name="new_login_page_schoool_name_title">Nom de\nl\'université: </string>
     <string name="new_login_page_real_name_title">Nom: </string>
     <string name="new_login_page_clear_content">Vider</string>
     <string name="new_login_page_submit">Soumettre</string>
-    <string name="new_login_page_error_0">L\'accès ne peut pas être vide</string>
-    <string name="new_login_page_error_1">Exception de serveur</string>
+    <string name="new_login_page_error_0">La saisie ne peut pas être vide</string>
+    <string name="new_login_page_error_1">Serveur en panne</string>
     <string name="new_login_page_error_2">Echec de la connexion</string>
     <!--index_page-->
-    <string name="index_page_title">Votre compte: </string>
-    <string name="index_page_practise">Modèle de s\'exercer</string>
-    <string name="index_page_contest">Modèle de concours</string>
-    <string name="index_page_join">Inscription de concours</string>
-    <string name="index_page_book">Carnet de vocabulaire</string>
-    <string name="index_page_exit">Se retirer</string>
+    <string name="index_page_loading">En cours de chargement</string>
+    <string name="index_page_practise">Mode d\'exercice</string>
+    <string name="index_page_contest">Mode de concours</string>
+    <string name="index_page_join">Inscription au concours</string>
+    <string name="index_page_dictionary">Carnet de vocabulaire</string>
+    <string name="index_page_exit">Fermer</string>
     <string name="index_page_sign_off">Se déconnecter</string>
+    <string name="index_page_exit_tips">Se déconnecter?</string>
+    <string name="index_page_sign_off_tips">Fermer?</string>
     <!--video_add_new_word-->
     <string name="movie_title">En cours de lecture: </string>
-    <string name="test_head_sign">（Modèle de dictée）</string>
-    <string name="test_result_title">Finir la dictée</string>
+    <string name="test_head_sign">（Mode de dictée）</string>
+    <string name="test_result_title">Dictée finie</string>
     <!--test_input_dialog-->
     <string name="test_input_dialog_title">Dictée de sous-titre</string>
     <string name="test_input_dialog_ok">Affirmer</string>
     <string name="test_input_dialog_idontknow">Je ne sais pas</string>
-    <string name="test_input">Tapez-vous</string>
+    <string name="test_input">Tapez</string>
     <!--test_result-->
-    <string name="test_result_score_notes">Résultat de dictée： </string>
+    <string name="test_result_score_notes">Note： </string>
     <string name="score_unit">point(s)</string>
     <string name="test_sum_word_notes">Nombre total de mots: </string>
     <string name="word_unit">Mot(s)</string>

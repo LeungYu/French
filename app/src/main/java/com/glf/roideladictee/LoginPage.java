@@ -210,7 +210,10 @@ public class LoginPage extends BaseActivity {
                         login_page_send_code.setText(getResources().getString(R.string.login_page_send_code));
                     }
                     else if(data.matches("\\d+"))
-                        login_page_send_code.setText(getResources().getString(R.string.login_page_send_code_wait_1) + data + getResources().getString(R.string.login_page_send_code_wait_2));
+                        if(LocaleUtils.getUserLocale(LoginPage.this).equals(Locale.CHINESE))
+                            login_page_send_code.setText(getResources().getString(R.string.login_page_send_code_wait_1) + data + getResources().getString(R.string.login_page_send_code_wait_2));
+                        else
+                            login_page_send_code.setText("(" + data + getResources().getString(R.string.login_page_send_code_wait_2));
                     break;
                 default:
                     break;

@@ -30,8 +30,6 @@ public class BaseActivity extends AppCompatActivity {
     protected ActivityController activityController;
     protected HomeWatcherReceiver homewatcherreceiver;
     protected static NotificationManager myManager;
-    protected static final int NOTIFICATION_ONGOING = 1;
-    protected static final int NOTIFICATION_CURRENT = 2;
     /**
      * 管理所有Activity的类
      */
@@ -59,7 +57,7 @@ public class BaseActivity extends AppCompatActivity {
         /**
          * 结束所有Activity
          */
-        protected void finishAll() {
+        public void finishAll() {
             for (Activity activity : activities) {
                 if (!activity.isFinishing()) {
                     Log.e("hahaha","结束活动："+activity.getLocalClassName());
@@ -71,7 +69,6 @@ public class BaseActivity extends AppCompatActivity {
         public void onTerminate() {
             Log.e("hahaha","当前PID="+android.os.Process.myPid());
             super.onTerminate();
-            myManager.cancel(NOTIFICATION_ONGOING);
             finishAll();
             android.os.Process.killProcess(android.os.Process.myPid());
         }
