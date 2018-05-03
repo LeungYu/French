@@ -268,7 +268,10 @@ public class LoginPage extends BaseActivity {
         login_page_login_logo_lp = (LinearLayout.LayoutParams) login_page_login_logo.getLayoutParams();
         login_page_login_title = (TextView) findViewById(R.id.login_page_login_title);
         TextPaint login_page_login_title_paint = login_page_login_title.getPaint();
-        login_page_login_title_paint.setTypeface(YOUYUAN);
+        if(LocaleUtils.getUserLocale(this).equals(Locale.FRENCH))
+            login_page_login_title_paint.setTypeface(YAHEI);
+        else
+            login_page_login_title_paint.setTypeface(YOUYUAN);
         login_page_login_title_lp = (LinearLayout.LayoutParams) login_page_login_title.getLayoutParams();
         login_page_phone_title = (TextView) findViewById(R.id.login_page_phone_title);
         TextPaint login_page_phone_title_paint = login_page_phone_title.getPaint();

@@ -4,11 +4,11 @@
     <string name="launch_page_version">V 1.0</string>
     <string name="launch_screen_copyright">Copyright©2018 GLF</string>
     <!--login_page-->
-    <string name="login_page_login_title">YINGTIN~Votre expert d\'étudier français</string>
+    <string name="login_page_login_title">YINGTIN\nVotre expert d\'étudier français</string>
     <string name="login_page_phone_title">Téléphone: </string>
-    <string name="login_page_verify_title">Code de vérification: </string>
+    <string name="login_page_verify_title">Code de\nvérification: </string>
     <string name="login_page_language_title">Langue: </string>
-    <string name="login_page_send_code">Envoyer le code de vérification</string>
+    <string name="login_page_send_code">Envoyer le code\nde vérification</string>
     <string name="login_page_send_code_ing">En train d\'envoyer</string>
     <string name="login_page_send_code_wait_1">Envoyer encore(</string>
     <string name="login_page_send_code_wait_2"> Après seconde(s))</string>
@@ -37,7 +37,7 @@
     <!--new_login_page-->
     <string name="new_login_page_title">Configurer les données personnelles</string>
     <string name="new_login_page_tips">Vous êtes nouveau? S\'inscrire</string>
-    <string name="new_login_page_schoool_name_title">Nom de l\'université: </string>
+    <string name="new_login_page_schoool_name_title">Nom de\nl\'université: </string>
     <string name="new_login_page_real_name_title">Nom: </string>
     <string name="new_login_page_clear_content">Vider</string>
     <string name="new_login_page_submit">Soumettre</string>

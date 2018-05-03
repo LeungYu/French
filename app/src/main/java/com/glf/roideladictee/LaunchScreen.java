@@ -217,7 +217,10 @@ public class LaunchScreen extends BaseActivity {
         launch_screen_login_title=(TextView)findViewById(R.id.launch_screen_login_title);
         launch_screen_login_title_lp=(LinearLayout.LayoutParams) launch_screen_login_title.getLayoutParams();
         TextPaint launch_screen_login_title_paint = launch_screen_login_title.getPaint();
-        launch_screen_login_title_paint.setTypeface(YOUYUAN);
+        if(LocaleUtils.getUserLocale(this).equals(Locale.FRENCH))
+            launch_screen_login_title_paint.setTypeface(YAHEI);
+        else
+            launch_screen_login_title_paint.setTypeface(YOUYUAN);
         launch_screen_version=(TextView)findViewById(R.id.launch_screen_version);
         launch_screen_version_lp=(LinearLayout.LayoutParams) launch_screen_version.getLayoutParams();
         TextPaint launch_screen_version_paint = launch_screen_version.getPaint();
