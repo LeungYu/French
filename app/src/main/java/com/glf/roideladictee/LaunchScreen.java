@@ -91,18 +91,10 @@ public class LaunchScreen extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_launch_screen);
         //辨别语言
         Locale loc = LocaleUtils.getUserLocale(this);
         System.out.println("当前语言："+LocaleUtils.getUserLocale(this));
-        if(loc==null){
-            setContentView(R.layout.activity_launch_screen);
-        }
-        else if (loc.equals(Locale.CHINESE)){
-            setContentView(R.layout.activity_launch_screen);
-        }
-        else if(loc.equals(Locale.FRENCH)){
-            setContentView(R.layout.activity_launch_screen);
-        }
         //设置
         if(isFirst){
             System.out.println("初次设置语言：");
