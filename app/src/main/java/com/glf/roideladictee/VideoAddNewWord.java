@@ -128,6 +128,7 @@ public class VideoAddNewWord extends BaseActivity {
 
     //获取参数
     protected void getExtra(){
+        videoMode = (VideoMode) getIntent().getExtras().get("videoMode");
         videoPath = getIntent().getExtras().getString("videoPath");
         captionsPath = getIntent().getExtras().getString("captionsPath");
     }

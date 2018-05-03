@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.glf.roideladictee.MyAdapter.FileAdapter;
 import com.glf.roideladictee.MyComparator.FileComparator;
+import com.glf.roideladictee.MyEnum.VideoMode;
 import com.glf.roideladictee.tools.BaseActivity;
 
 import java.io.File;
@@ -43,6 +44,7 @@ public class ResourcesPicker extends BaseActivity {
     TextView resources_picket_now_path;
     String selectFileEndsWith = ".mp4";
     String videoPath,captionsPath;
+    VideoMode videoMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class ResourcesPicker extends BaseActivity {
     //获取参数
     protected void getExtra(){
         try{
+            videoMode = (VideoMode) getIntent().getExtras().get("videoMode");
             selectFileEndsWith = getIntent().getExtras().getString("selectFileEndsWith");
             videoPath = getIntent().getExtras().getString("videoPath");
             captionsPath = getIntent().getExtras().getString("captionsPath");
@@ -67,6 +70,7 @@ public class ResourcesPicker extends BaseActivity {
             //这个会经常抛出，是正常情况，里面顺序不能变
         }
         if (selectFileEndsWith == null)selectFileEndsWith = ".mp4";
+        if(videoMode ==null)videoMode=VideoMode.ADD;
     }
 
     //按钮相关初始化
@@ -86,6 +90,7 @@ public class ResourcesPicker extends BaseActivity {
                     Intent intent = new Intent(ResourcesPicker.this,ResourcesPicker.class);
                     intent.putExtra("videoPath",f.getPath());
                     intent.putExtra("selectFileEndsWith",".ass");
+                    intent.putExtra("videoMode",videoMode);
                     Log.e("ljong_rp1",f.getPath());
                     startActivity(intent);
                     finish();
@@ -93,7 +98,7 @@ public class ResourcesPicker extends BaseActivity {
                     Intent intent = new Intent(ResourcesPicker.this,VideoAddNewWord.class);
                     intent.putExtra("videoPath",videoPath);
                     intent.putExtra("captionsPath",f.getPath());
-                    Log.e("ljong_rp2",videoPath+" "+f.getPath());
+                    intent.putExtra("videoMode",videoMode);
                     startActivity(intent);
                     finish();
                 }
