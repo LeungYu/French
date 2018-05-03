@@ -2,6 +2,7 @@ package com.glf.roideladictee.MyAdapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
  * 自定义适配器
  */
 public class FileAdapter extends BaseAdapter {
+
+    private static Typeface typeface;
 
     /**
      * 上下文
@@ -47,15 +50,18 @@ public class FileAdapter extends BaseAdapter {
     public FileAdapter(Context context, File[] files) {
         this.context = context;
         this.files = files;
-
-        // 获得服务实例
         layoutInflater = LayoutInflater.from(context);
 
 //        layoutInflater = (LayoutInflater) context.getSystemService(
 //                Context.LAYOUT_INFLATER_SERVICE);
     }
 
-
+    public FileAdapter(Context context, File[] files,Typeface typeface) {
+        this.typeface=typeface;
+        this.context = context;
+        this.files = files;
+        layoutInflater = LayoutInflater.from(context);
+    }
 
     /**
      * 获得数据总数
@@ -155,7 +161,6 @@ public class FileAdapter extends BaseAdapter {
             id = counter++;
         }
 
-
         public void bindData(File file) {
             if(!file.isDirectory()){
                     icon.setImageResource(
@@ -184,6 +189,10 @@ public class FileAdapter extends BaseAdapter {
                 }
              }else{
                 info.setText(String.format("%d"+  context.getResources().getString(R.string.folder_num), file.list().length));
+            }
+            if(typeface != null){
+                title.getPaint().setTypeface(typeface);
+                info.getPaint().setTypeface(typeface);
             }
         }
     }
