@@ -74,5 +74,10 @@
             android:layout_centerVertical="true"
             android:textSize="12sp"/>
     </android.support.percent.PercentRelativeLayout>
-
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/head_bar"
+        android:id="@+id/loading"
+        android:src="@drawable/loading" />
 </android.support.percent.PercentRelativeLayout>

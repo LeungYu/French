@@ -19,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -75,7 +76,7 @@ public class VideoAddNewWord extends BaseActivity {
     private List<Boolean> isTestCaptions;
     private CaptionAdapter captionAdapter;
     private CaptionLayoutManager mLayoutManager;
-    private String captionsPath = "/french/test.ass";
+    private String captionsPath = "storage/emulated/0/french/test.ass";
     private int startIndex,endIndex,textIndex;
     private String lastCaptions = "";
         /*ADD模式用top*/
@@ -98,7 +99,7 @@ public class VideoAddNewWord extends BaseActivity {
     /*视频用top*/
     private int endTime = -1;
     private VideoView videoView;
-    private String videoPath = "/french/test.mp4";
+    private String videoPath = "content://media/external/video/media/325777";
     private Uri videoUrl;
     private static final int PLAY = 1110;
     Handler handler;
@@ -113,6 +114,7 @@ public class VideoAddNewWord extends BaseActivity {
 
     //初始化
     protected void Init(){
+        getExtra();//获取参数
         screenPercentInit();//获取屏幕的宽高，生成与原型的相差比例
         screenInit();//屏幕初始化
         textGroupInit();//字体相关初始化
@@ -122,6 +124,12 @@ public class VideoAddNewWord extends BaseActivity {
         }
         playButtonInit();//播放按钮初始化
         videoGroupInit();//视频相关初始化
+    }
+
+    //获取参数
+    protected void getExtra(){
+        videoPath = getIntent().getExtras().getString("videoPath");
+        captionsPath = getIntent().getExtras().getString("captionsPath");
     }
 
     //获取屏幕的宽高，生成与原型的相差比例
@@ -224,9 +232,13 @@ public class VideoAddNewWord extends BaseActivity {
         captionsHandlerInit();//字幕同步handler型线程
         captionsInit();//字幕容器RecyclerView初始化
         captionsAssDBInit();//字幕Ass数据库初始化
-        captionsSet();//字幕源设置
         videoViewInit();//视频屏幕及源初始化
-        videoPlay();//视频播放
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                captionsSet();//字幕源设置
+            }
+        }).start();
     }
 
     //字幕同步handler型线程
@@ -289,6 +301,10 @@ public class VideoAddNewWord extends BaseActivity {
                         }
                         handler.sendEmptyMessageDelayed(PLAY,500);
                         break;
+                    case 200:
+                        findViewById(R.id.loading).setVisibility(View.INVISIBLE);
+                        videoPlay();
+                        break;
                 }
             }
         };
@@ -330,7 +346,6 @@ public class VideoAddNewWord extends BaseActivity {
 
     //字幕源设置
     protected void captionsSet(){
-        captionsPath = Environment.getExternalStorageDirectory().getPath()+captionsPath;
         try {
             File file = new File(captionsPath);
             int record = 0;
@@ -377,6 +392,7 @@ public class VideoAddNewWord extends BaseActivity {
                 }
                 isr.close();
                 br.close();
+                handler.sendEmptyMessage(200);
             }else {
                 Toast.makeText(getApplicationContext(),"字幕不存在",Toast.LENGTH_SHORT).show();
             }
@@ -426,21 +442,18 @@ public class VideoAddNewWord extends BaseActivity {
 
     //视屏播放
     protected void videoPlay(){
-        videoPath = Environment.getExternalStorageDirectory().getPath()+videoPath;
         videoUrl = Uri.parse(videoPath);
         videoView.setVideoURI(videoUrl);
-
+        videoView.start();
         if(videoMode == VideoMode.TEST){
             firstCaptions = true;
             MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-            mmr.setDataSource(videoPath);
+            mmr.setDataSource(VideoAddNewWord.this,videoUrl);
             String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
             seeToWhere = (int)Math.round(Math.random() * (Integer.parseInt(duration) - 5 * 60 * 1000));
             if(seeToWhere < 0)seeToWhere = 0;
             videoView.seekTo(seeToWhere);
-
         }
-        videoView.start();
     }
 
     //字符串时间0:00:01.00转换为int时间1000
