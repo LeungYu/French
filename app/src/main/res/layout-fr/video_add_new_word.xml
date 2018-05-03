@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/video_add_new_word_percent_relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.glf.roideladictee.VideoAddNewWord"
+    android:clickable="true">
+
+    <com.glf.roideladictee.MyView.FullScreenVideoView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/head_bar"
+        android:id="@+id/videoView" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/captions_recyclerview"
+        android:layout_centerHorizontal="true"
+        app:layout_widthPercent="60%"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="17sp"/>
+
+    <Button
+        android:background="@drawable/add_word_button"
+        android:id="@+id/add_word_button"
+        app:layout_widthPercent="8%"
+        app:layout_aspectRatio="250%"
+        android:visibility="invisible"/>
+
+    <Button
+        app:layout_aspectRatio="100%"
+        app:layout_widthPercent="10%"
+        android:layout_alignParentBottom="true"
+        app:layout_marginBottomPercent="15%"
+        app:layout_marginLeftPercent="5%"
+        android:id="@+id/play_button"
+        android:clickable="true"
+        android:background="@drawable/play_button"
+        android:visibility="invisible"/>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        app:layout_heightPercent="8.66%"
+        android:id="@+id/head_bar"
+        android:clickable="true"
+        android:background="#001e4e">
+        <com.glf.roideladictee.MyView.BackButton
+            android:background="@drawable/back"
+            android:id="@+id/back"
+            app:layout_heightPercent="58%"
+            android:layout_centerVertical="true"
+            app:layout_marginLeftPercent="1.1%"
+            app:layout_aspectRatio="100%" />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="@string/movie_title"
+            android:id="@+id/movie_title"
+            app:layout_marginLeftPercent="1.1%"
+            android:layout_toRightOf="@+id/back"
+            android:layout_centerVertical="true"
+            android:textSize="12sp"/>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text=""
+            app:layout_marginLeftPercent="1.1%"
+            android:layout_toRightOf="@+id/movie_title"
+            android:id="@+id/movie_name"
+            android:layout_centerVertical="true"
+            android:textSize="12sp"/>
+    </android.support.percent.PercentRelativeLayout>
+
+</android.support.percent.PercentRelativeLayout>

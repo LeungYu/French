@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true">
+
+    <android.support.percent.PercentRelativeLayout
+        app:layout_heightPercent="35%"
+        app:layout_widthPercent="35%"
+        android:clickable="true"
+        android:background="@android:color/white"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:text="@string/test_input_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:layout_marginTopPercent="5%"
+            android:textColor="#001e4e"
+            android:textSize="12sp" />
+
+        <Button
+            android:text="@string/test_input_dialog_ok"
+            app:layout_widthPercent="50%"
+            app:layout_heightPercent="25%"
+            android:id="@+id/ok"
+            android:layout_alignParentBottom="true"
+            android:background="@null"
+            android:textColor="#1d355d"
+            android:textSize="12sp" />
+        <Button
+            android:text="@string/test_input_dialog_idontknow"
+            app:layout_widthPercent="50%"
+            app:layout_heightPercent="25%"
+            android:id="@+id/idontknow"
+            android:layout_toEndOf="@+id/ok"
+            android:layout_alignParentBottom="true"
+            android:background="@null"
+            android:textColor="#1d355d"
+            android:textSize="12sp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_centerInParent="true"
+            android:id="@+id/test_input"
+            android:hint="@string/test_input"
+            android:textSize="12sp"
+            android:textColor="@android:color/black" />
+    </android.support.percent.PercentRelativeLayout>
+</android.support.percent.PercentRelativeLayout>

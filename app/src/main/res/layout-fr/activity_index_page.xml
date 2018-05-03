@@ -14,8 +14,6 @@
         android:background="#199900"
         android:orientation="horizontal">
         <LinearLayout
-            android:id="@+id/index_page_user"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -69,12 +67,11 @@
         android:orientation="vertical">
         <LinearLayout
             android:id="@+id/index_page_practise"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:paddingLeft="22dp"
-            android:paddingRight="22dp"
+            android:paddingRight="50dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:background="@drawable/index_page_button"
@@ -89,7 +86,7 @@
                 android:id="@+id/index_page_practise_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="45dp"
                 android:text="@string/index_page_practise"
                 android:textStyle="bold"
                 android:textSize="20dp"
@@ -98,12 +95,11 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/index_page_contest"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:paddingLeft="22dp"
-            android:paddingRight="22dp"
+            android:paddingRight="42dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:background="@drawable/index_page_button"
@@ -118,7 +114,7 @@
                 android:id="@+id/index_page_contest_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="35dp"
                 android:text="@string/index_page_contest"
                 android:textStyle="bold"
                 android:textSize="20dp"
@@ -127,7 +123,6 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/index_page_join"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -156,7 +151,6 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/index_page_dictionary"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -176,7 +170,7 @@
                 android:id="@+id/index_page_dictionary_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="32dp"
+                android:layout_marginLeft="28dp"
                 android:text="@string/index_page_dictionary"
                 android:textStyle="bold"
                 android:textSize="20dp"

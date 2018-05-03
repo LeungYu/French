@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextPaint;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,6 +45,7 @@ public class LaunchScreen extends BaseActivity {
     LinearLayout.LayoutParams launch_screen_version_lp;
     TextView launch_screen_copyright;
     LinearLayout.LayoutParams launch_screen_copyright_lp;
+    private String login_user="";
     private boolean network=true;
     private String error_content="";
     private boolean AlertDialogOn=false;
@@ -93,10 +95,16 @@ public class LaunchScreen extends BaseActivity {
         //辨别语言
         Locale loc = LocaleUtils.getUserLocale(this);
         System.out.println("当前语言："+LocaleUtils.getUserLocale(this));
+        //设置
         if(isFirst){
             System.out.println("初次设置语言：");
             isFirst=false;
-            if (loc.equals(Locale.CHINESE)){
+            if (loc==null){
+                System.out.println("设置中文");
+                LocaleUtils.updateLocale(LaunchScreen.this, LOCALE_CHINESE);
+                LaunchScreen.this.restartAct();
+            }
+            else if (loc.equals(Locale.CHINESE)){
                 System.out.println("设置中文");
                 LocaleUtils.updateLocale(LaunchScreen.this, LOCALE_CHINESE);
                 LaunchScreen.this.restartAct();
@@ -189,6 +197,7 @@ public class LaunchScreen extends BaseActivity {
                             Index_Page_Activity.putExtra("login_user", login_user);
                             startActivity(Index_Page_Activity);
                         }
+                        LaunchScreen.this.finish();
                     } else {
                         LaunchScreenErrorHandler.sendEmptyMessage(0);
                         error_content=getResources().getString(R.string.login_page_error_9);
@@ -208,7 +217,10 @@ public class LaunchScreen extends BaseActivity {
         launch_screen_login_title=(TextView)findViewById(R.id.launch_screen_login_title);
         launch_screen_login_title_lp=(LinearLayout.LayoutParams) launch_screen_login_title.getLayoutParams();
         TextPaint launch_screen_login_title_paint = launch_screen_login_title.getPaint();
-        launch_screen_login_title_paint.setTypeface(YOUYUAN);
+        if(LocaleUtils.getUserLocale(this).equals(Locale.FRENCH))
+            launch_screen_login_title_paint.setTypeface(YAHEI);
+        else
+            launch_screen_login_title_paint.setTypeface(YOUYUAN);
         launch_screen_version=(TextView)findViewById(R.id.launch_screen_version);
         launch_screen_version_lp=(LinearLayout.LayoutParams) launch_screen_version.getLayoutParams();
         TextPaint launch_screen_version_paint = launch_screen_version.getPaint();
@@ -217,6 +229,13 @@ public class LaunchScreen extends BaseActivity {
         launch_screen_copyright_lp=(LinearLayout.LayoutParams) launch_screen_copyright.getLayoutParams();
         TextPaint launch_screen_copyright_paint = launch_screen_copyright.getPaint();
         launch_screen_copyright_paint.setTypeface(YAHEI);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && event.getAction() == KeyEvent.ACTION_DOWN) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
     /**
      * 重启当前Activity
