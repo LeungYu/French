@@ -25,7 +25,6 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.glf.roideladictee.Json.Check_Verify_Code_Json;
 import com.glf.roideladictee.Json.Get_Phone_Num_Time_Json;
@@ -402,8 +401,6 @@ public class LoginPage extends BaseActivity {
         login_page_send_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 new Thread(){
                     public void run(){
                         String phone_num=login_page_phone.getText().toString();
@@ -739,6 +736,7 @@ public class LoginPage extends BaseActivity {
                                     Index_Page_Activity.putExtra("login_user", login_user);
                                     startActivity(Index_Page_Activity);
                                 }
+
                                 body = new FormBody.Builder()
                                         .add("phone_num", phone_num)
                                         .build();
@@ -752,6 +750,7 @@ public class LoginPage extends BaseActivity {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+                                LoginPage.this.finish();
                             } else {
                                 LoginPageErrorHandler.sendEmptyMessage(0);
                                 Message msgerror = new Message();
@@ -772,8 +771,6 @@ public class LoginPage extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && event.getAction() == KeyEvent.ACTION_DOWN) {
-            Toast.makeText(getApplicationContext(), "最小化到后台运行",Toast.LENGTH_SHORT).show();
-            moveTaskToBack(true);
             return true;
         }
         return super.onKeyDown(keyCode, event);

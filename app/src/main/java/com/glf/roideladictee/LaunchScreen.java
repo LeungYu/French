@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextPaint;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,6 +45,7 @@ public class LaunchScreen extends BaseActivity {
     LinearLayout.LayoutParams launch_screen_version_lp;
     TextView launch_screen_copyright;
     LinearLayout.LayoutParams launch_screen_copyright_lp;
+    private String login_user="";
     private boolean network=true;
     private String error_content="";
     private boolean AlertDialogOn=false;
@@ -89,14 +91,28 @@ public class LaunchScreen extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch_screen);
         //辨别语言
         Locale loc = LocaleUtils.getUserLocale(this);
         System.out.println("当前语言："+LocaleUtils.getUserLocale(this));
+        if(loc==null){
+            setContentView(R.layout.activity_launch_screen);
+        }
+        else if (loc.equals(Locale.CHINESE)){
+            setContentView(R.layout.activity_launch_screen);
+        }
+        else if(loc.equals(Locale.FRENCH)){
+            setContentView(R.layout.activity_launch_screen);
+        }
+        //设置
         if(isFirst){
             System.out.println("初次设置语言：");
             isFirst=false;
-            if (loc.equals(Locale.CHINESE)){
+            if (loc==null){
+                System.out.println("设置中文");
+                LocaleUtils.updateLocale(LaunchScreen.this, LOCALE_CHINESE);
+                LaunchScreen.this.restartAct();
+            }
+            else if (loc.equals(Locale.CHINESE)){
                 System.out.println("设置中文");
                 LocaleUtils.updateLocale(LaunchScreen.this, LOCALE_CHINESE);
                 LaunchScreen.this.restartAct();
@@ -189,6 +205,7 @@ public class LaunchScreen extends BaseActivity {
                             Index_Page_Activity.putExtra("login_user", login_user);
                             startActivity(Index_Page_Activity);
                         }
+                        LaunchScreen.this.finish();
                     } else {
                         LaunchScreenErrorHandler.sendEmptyMessage(0);
                         error_content=getResources().getString(R.string.login_page_error_9);
@@ -217,6 +234,13 @@ public class LaunchScreen extends BaseActivity {
         launch_screen_copyright_lp=(LinearLayout.LayoutParams) launch_screen_copyright.getLayoutParams();
         TextPaint launch_screen_copyright_paint = launch_screen_copyright.getPaint();
         launch_screen_copyright_paint.setTypeface(YAHEI);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && event.getAction() == KeyEvent.ACTION_DOWN) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
     /**
      * 重启当前Activity

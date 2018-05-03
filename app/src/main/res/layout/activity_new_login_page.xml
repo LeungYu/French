@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:textColor="#03254C"
             android:textSize="18dp"
             android:textStyle="bold"
@@ -131,5 +131,24 @@
             android:textSize="12dp"
             android:textColor="#FF0000"
             android:visibility="invisible"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/new_login_page_loading_bar_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#000000"
+        android:alpha="0">
+        <com.glf.roideladictee.metroloading.MetroLoadingView
+            android:id="@+id/new_login_page_loading_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            app:transform_color_mode="symmetry"
+            app:transform_color="#ffffff"
+            app:indicator_color="#199900"
+            app:indicator_height="10dp"
+            app:indicator_width="10dp"
+            app:indicator="circle"
+            app:fade="true"
+            />
     </LinearLayout>
 </RelativeLayout>

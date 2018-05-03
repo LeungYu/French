@@ -25,13 +25,13 @@
             android:theme="@style/MyVideoStyle"
             android:screenOrientation="landscape"
             android:launchMode="singleTop">
+        </activity>
+        <activity android:name=".LaunchScreen" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LaunchScreen" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait"/>
         <activity android:name=".TestResult" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait"/>
         <activity android:name=".ResourcesPicker" />
     </application>
