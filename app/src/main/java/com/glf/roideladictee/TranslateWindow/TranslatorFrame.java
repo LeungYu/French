@@ -61,6 +61,7 @@ public class TranslatorFrame extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.translate_frame);
         target=getIntent().getStringExtra("target");
+        System.out.println("单词："+target);
         initStyle();
         initTarget();
         initTranslation();
@@ -130,7 +131,7 @@ public class TranslatorFrame extends AppCompatActivity {
                     String data = (String)msg.obj;
                     if(data==null)
                         return;
-                    else if(data.equals("中文翻译获取失败")){
+                    else if(data.equals("ERROR")){
                         translate_frame_main_zh.setTextColor(Color.parseColor("#FFFF0000"));
                         translate_frame_main_zh.setText(data);
                     }
@@ -153,7 +154,7 @@ public class TranslatorFrame extends AppCompatActivity {
                     String data = (String)msg.obj;
                     if(data==null)
                         return;
-                    else if(data.equals("例句获取失败")){
+                    else if(data.equals("ERROR")){
                         translate_frame_main_example.setTextColor(Color.parseColor("#FFFF0000"));
                         translate_frame_main_example.setText(data);
                     }
@@ -175,34 +176,29 @@ public class TranslatorFrame extends AppCompatActivity {
             public void run(){
                 Document doc=null;
                 try {
-                    doc = Jsoup.connect("http://www.frdic.com/mdicts/fr/"+target).get();
+                    doc = Jsoup.connect("http://www.frdic.com/dicts/fr/"+target).get();
                 } catch (IOException e) {
                     updateCnTranslationHandler.sendEmptyMessage(0);
                     Message msg = new Message();
-                    msg.obj = "中文翻译获取失败";
+                    msg.obj = "ERROR";
                     updateCnTranslationHandler.sendMessage(msg);
                     return;
                 }
                 String setter="";
                 try {
-                    String wordType = doc.getElementById("FCChild").getElementsByClass("cara").first().text();
-                    setter += wordType + "  ";
+                    String wordType = doc.getElementById("ExpFCChild").getElementsByClass("cara").first().text();
+                    setter += "【"+wordType+"】 ";
                 }
                 catch (Exception e){
-                    setter="";
+                    setter="【NULL】 ";
                 }
-                Elements cnTranslations=doc.getElementById("FCChild").getElementsByClass("exp");
-                for(Element e:cnTranslations){
-                    StringBuffer temp=new StringBuffer(e.text());
-                    for(int i=0;i<temp.length();i++){
-                        if(temp.charAt(i)==' '){
-                            temp.setCharAt(i,'；');
-                        }
-                        if(temp.charAt(i)=='，'){
-                            temp.setCharAt(i,'\0');
-                        }
-                    }
-                    setter+=temp;
+                try {
+                    String wordMeaning=doc.getElementById("ExpFCChild").getElementsByClass("exp").first().text();
+                    wordMeaning=wordMeaning.substring(wordMeaning.indexOf(".")+1,wordMeaning.indexOf("："));
+                    setter += wordMeaning;
+                }
+                catch (Exception e){
+                    setter="NULL";
                 }
                 updateCnTranslationHandler.sendEmptyMessage(0);
                 Message msg = new Message();
@@ -217,27 +213,33 @@ public class TranslatorFrame extends AppCompatActivity {
             public void run(){
                 Document doc=null;
                 try {
-                    doc = Jsoup.connect("http://www.frdic.com/mdicts/fr/"+target).get();
+                    doc = Jsoup.connect("http://www.frdic.com/dicts/fr/"+target).get();
                 } catch (IOException e) {
+                    updateCnTranslationHandler.sendEmptyMessage(0);
                     Message msg = new Message();
-                    setter[0] = "中文翻译获取失败";
+                    msg.obj = "ERROR";
+                    updateCnTranslationHandler.sendMessage(msg);
                     return;
                 }
-                String wordType = doc.getElementById("FCChild").getElementsByClass("cara").first().text();
-                setter[0] +=wordType+"  ";
-                Elements cnTranslations=doc.getElementById("FCChild").getElementsByClass("exp");
-                for(Element e:cnTranslations){
-                    StringBuffer temp=new StringBuffer(e.text());
-                    for(int i=0;i<temp.length();i++){
-                        if(temp.charAt(i)==' '){
-                            temp.setCharAt(i,'；');
-                        }
-                        if(temp.charAt(i)=='，'){
-                            temp.setCharAt(i,'\0');
-                        }
-                    }
-                    setter[0] +=temp;
+                try {
+                    String wordType = doc.getElementById("ExpFCChild").getElementsByClass("cara").first().text();
+                    setter[0] += "【"+wordType+"】 ";
                 }
+                catch (Exception e){
+                    setter[0]="【NULL】 ";
+                }
+                try {
+                    String wordMeaning=doc.getElementById("ExpFCChild").getElementsByClass("exp").first().text();
+                    wordMeaning.substring(wordMeaning.indexOf("."),wordMeaning.length());
+                    setter[0] += wordMeaning;
+                }
+                catch (Exception e){
+                    setter[0]="NULL";
+                }
+                updateCnTranslationHandler.sendEmptyMessage(0);
+                Message msg = new Message();
+                msg.obj = setter;
+                updateCnTranslationHandler.sendMessage(msg);
             }
         }.start();
         return setter[0];
@@ -247,20 +249,25 @@ public class TranslatorFrame extends AppCompatActivity {
             public void run(){
                 Document doc=null;
                 try {
-                    doc = Jsoup.connect("http://www.frdic.com/mdicts/fr/"+target).get();
+                    doc = Jsoup.connect("http://www.frdic.com/dicts/fr/"+target).get();
                 } catch (IOException e) {
                     updateExampleHandler.sendEmptyMessage(0);
                     Message msg = new Message();
-                    msg.obj = "例句获取失败";
+                    msg.obj = "ERROR";
                     updateExampleHandler.sendMessage(msg);
                     return;
                 }
-                Elements Example=doc.getElementById("lj_div").getElementsByTag("li");
-                String setter="";
-                int i=0;
-                int size=Example.size();
-                for(Element e:Example){
-                    setter+=Integer.toString(++i)+". "+e.getElementsByClass("line").first().text()+"\n"+"    "+e.getElementsByClass("exp").first().text()+(i==size?"":"\n\n");
+                String setter = "";
+                try {
+                    Elements Example = doc.getElementById("ExpLJChild").getElementsByClass("lj_item");
+                    int i = 0;
+                    int size = Example.size();
+                    for (Element e : Example) {
+                        setter += Integer.toString(++i)+". "+e.getElementsByClass("line").first().text() + "\n" + "    " + e.getElementsByClass("exp").first().text() + (i == size ? "" : "\n\n");
+                    }
+                }
+                catch (Exception e){
+                    setter="ERROR";
                 }
                 updateExampleHandler.sendEmptyMessage(0);
                 Message msg = new Message();

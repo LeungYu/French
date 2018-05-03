@@ -3,8 +3,8 @@
     package="com.glf.roideladictee">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -14,25 +14,48 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".TranslateWindow.TranslatorFrame"
-            android:theme="@style/MyDialogActivityStyle"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".LoginPage" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait"></activity>
-        <activity android:name=".NewLoginPage" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait"/>
-        <activity android:name=".IndexPage" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait" android:launchMode="singleInstance"/>
-        <activity android:name=".VideoAddNewWord"
-            android:theme="@style/MyVideoStyle"
-            android:screenOrientation="landscape"
-            android:launchMode="singleTop">
+            android:name=".tester.Tester">
         </activity>
-        <activity android:name=".LaunchScreen" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait">
+        <activity
+            android:name=".TranslateWindow.TranslatorFrame"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyDialogActivityStyle" />
+        <activity
+            android:name=".LoginPage"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_NoBar" />
+        <activity
+            android:name=".NewLoginPage"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_NoBar" />
+        <activity
+            android:name=".IndexPage"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_NoBar" />
+        <activity
+            android:name=".VideoAddNewWord"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyVideoStyle"></activity>
+        <activity
+            android:name=".LaunchScreen"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_NoBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestResult" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait"/>
-        <activity android:name=".ResourcesPicker" android:theme="@style/AppTheme_NoBar" android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name=".TestResult"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_NoBar" />
+        <activity
+            android:name=".ResourcesPicker"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_NoBar"></activity>
     </application>
+
 </manifest>
