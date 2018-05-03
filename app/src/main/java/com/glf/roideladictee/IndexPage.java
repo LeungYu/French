@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.glf.roideladictee.MyEnum.VideoMode;
 import com.glf.roideladictee.tools.BaseActivity;
 import com.glf.roideladictee.tools.MeasureView;
 
@@ -300,6 +301,22 @@ public class IndexPage extends BaseActivity {
                 Message msgerror =new Message();
                 msgerror.obj = "exit";
                 IndexPageTitleBarHandler.sendMessage(msgerror);
+            }
+        });
+        index_page_practise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IndexPage.this, ResourcesPicker.class);
+                intent.putExtra("videoMode", VideoMode.ADD);
+                startActivity(intent);
+            }
+        });
+        index_page_contest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IndexPage.this, ResourcesPicker.class);
+                intent.putExtra("videoMode", VideoMode.TEST);
+                startActivity(intent);
             }
         });
     }

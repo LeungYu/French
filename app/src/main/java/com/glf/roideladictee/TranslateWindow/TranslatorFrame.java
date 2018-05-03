@@ -184,8 +184,13 @@ public class TranslatorFrame extends AppCompatActivity {
                     return;
                 }
                 String setter="";
-                String wordType = doc.getElementById("FCChild").getElementsByClass("cara").first().text();
-                setter+=wordType+"  ";
+                try {
+                    String wordType = doc.getElementById("FCChild").getElementsByClass("cara").first().text();
+                    setter += wordType + "  ";
+                }
+                catch (Exception e){
+                    setter="";
+                }
                 Elements cnTranslations=doc.getElementById("FCChild").getElementsByClass("exp");
                 for(Element e:cnTranslations){
                     StringBuffer temp=new StringBuffer(e.text());

@@ -303,6 +303,7 @@ public class NewLoginPage extends BaseActivity {
                                     Intent IndexPage_Activity = new Intent(NewLoginPage.this, IndexPage.class);
                                     IndexPage_Activity.putExtra("login_user", login_user);
                                     startActivity(IndexPage_Activity);
+                                    NewLoginPage.this.finish();
                                 }
                                 else{
                                     NewLoginPageErrorHandler.sendEmptyMessage(0);

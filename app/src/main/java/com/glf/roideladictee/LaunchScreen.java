@@ -134,6 +134,7 @@ public class LaunchScreen extends BaseActivity {
                     LaunchScreen.super.login_user=login_user;
                     Login_Page_Activity.putExtra("login_user", login_user);
                     startActivity(Login_Page_Activity);
+                    LaunchScreen.this.finish();
                 }
                 else{
                     try {
@@ -188,6 +189,7 @@ public class LaunchScreen extends BaseActivity {
                             LaunchScreen.super.login_user=login_user;
                             Newer_Login_Page_Activity.putExtra("login_user", login_user);
                             startActivity(Newer_Login_Page_Activity);
+                            LaunchScreen.this.finish();
                         }
                         else{
                             Log.e("hahaha","goto IndexPage");

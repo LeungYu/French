@@ -1,12 +1,8 @@
 package com.glf.roideladictee;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,19 +10,15 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.glf.roideladictee.MyAdapter.FileAdapter;
-import com.glf.roideladictee.MyComparator.FileComparator;
 import com.glf.roideladictee.MyEnum.VideoMode;
 import com.glf.roideladictee.tools.BaseActivity;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created by 11951 on 2018-05-02.
@@ -131,7 +123,7 @@ public class ResourcesPicker extends BaseActivity {
     // ListView初始化
     private void listViewInit() {
         listView = (ListView) findViewById(R.id.listView);
-        f = new File(Environment.getExternalStorageDirectory() + "/french");
+        f = Environment.getExternalStorageDirectory();
         setListView();
 
         fileAdapter = new FileAdapter(this, data);
@@ -171,6 +163,7 @@ public class ResourcesPicker extends BaseActivity {
 
     private void setListView(){
         data = f.listFiles();
+        Log.e("ljong",f.getPath());
         ArrayList<File> files = new ArrayList<>();
         for(File file:data){
             if(file.isDirectory()||file.getName().endsWith(selectFileEndsWith)){

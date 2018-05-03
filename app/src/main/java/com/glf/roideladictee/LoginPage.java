@@ -733,6 +733,7 @@ public class LoginPage extends BaseActivity {
                                     LoginPage.super.login_user=login_user;
                                     Newer_Login_Page_Activity.putExtra("login_user", login_user);
                                     startActivity(Newer_Login_Page_Activity);
+                                    LoginPage.this.finish();
                                 }
                                 else{
                                     Log.e("hahaha","goto IndexPage");
@@ -741,6 +742,7 @@ public class LoginPage extends BaseActivity {
                                     LoginPage.super.login_user=login_user;
                                     Index_Page_Activity.putExtra("login_user", login_user);
                                     startActivity(Index_Page_Activity);
+                                    LoginPage.this.finish();
                                 }
 
                                 body = new FormBody.Builder()
