@@ -17,15 +17,19 @@
         android:layout_centerVertical="true"
         app:srcCompat="@drawable/ic_folder"/>
 
+    <ImageView
+        app:layout_widthPercent="5%"
+        android:layout_height="wrap_content"
+        android:id="@+id/block"
+        android:layout_toRightOf="@+id/imageView_icon"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="文件名称"
         android:id="@+id/textView_name"
         android:layout_alignTop="@+id/imageView_icon"
-        android:layout_toRightOf="@+id/imageView_icon"
-        android:layout_toEndOf="@+id/imageView_icon"
-        app:layout_marginLeftPercent="5%"
+        android:layout_toRightOf="@+id/block"
+        android:layout_toEndOf="@+id/block"
         android:textSize="18sp"
         android:textColor="@android:color/black" />
 

@@ -1,8 +1,20 @@
 package com.glf.roideladictee;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,15 +22,19 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.glf.roideladictee.MyAdapter.FileAdapter;
+import com.glf.roideladictee.MyComparator.FileComparator;
 import com.glf.roideladictee.MyEnum.VideoMode;
 import com.glf.roideladictee.tools.BaseActivity;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by 11951 on 2018-05-02.
@@ -37,6 +53,8 @@ public class ResourcesPicker extends BaseActivity {
     String selectFileEndsWith = ".mp4";
     String videoPath,captionsPath;
     VideoMode videoMode;
+    int ASK_PERMISSION = 0X12;
+    Typeface YAHEI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +65,9 @@ public class ResourcesPicker extends BaseActivity {
 
     protected void Init(){
         getExtra();//获取参数
+        textGroupInit();//字体相关初始化
+        askPermission();//访问权限
         buttonGroupInit();//按钮相关初始化
-        listViewInit(); // ListView初始化
     }
 
     //获取参数
@@ -63,6 +82,56 @@ public class ResourcesPicker extends BaseActivity {
         }
         if (selectFileEndsWith == null)selectFileEndsWith = ".mp4";
         if(videoMode ==null)videoMode=VideoMode.ADD;
+    }
+
+    //访问权限
+    protected void askPermission(){
+        final String[] PERMISSIONS_STORAGE = {
+                "android.permission.READ_EXTERNAL_STORAGE",
+                "android.permission.WRITE_EXTERNAL_STORAGE" };
+
+        //检查权限
+        //检查版本是否大于M
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                //进入到这里代表没有权限.
+                if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    //已经禁止提示了
+                    AlertDialog.Builder builder=new AlertDialog.Builder(this);
+                    builder.setCancelable(false)
+                            .setMessage("应用需要存储权限来让您选择手机中的相片！")
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(ResourcesPicker.this,"点击了取消按钮",Toast.LENGTH_LONG).show();
+                                }
+                            })
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ActivityCompat.requestPermissions(ResourcesPicker.this, PERMISSIONS_STORAGE, ASK_PERMISSION);
+                                }
+                            }).show();
+
+                }else{
+                    ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, ASK_PERMISSION);
+                }
+
+            } else {
+                listViewInit(); // ListView初始化
+            }
+        }else {
+            listViewInit(); // ListView初始化
+        }
+    }
+
+    //字体相关初始化
+    protected void textGroupInit(){
+        YAHEI = Typeface.createFromAsset(getAssets(), "fonts/YAHEI.ttc");
+        int textViewIds[] = {R.id.title,R.id.resources_picket_now_path_title,R.id.resources_picket_now_path,R.id.resources_picket_selected_title,R.id.resources_picket_selected};
+        for(int textViewId:textViewIds){
+            ((TextView)findViewById(textViewId)).getPaint().setTypeface(YAHEI);
+        }
     }
 
     //按钮相关初始化
@@ -124,9 +193,10 @@ public class ResourcesPicker extends BaseActivity {
     private void listViewInit() {
         listView = (ListView) findViewById(R.id.listView);
         f = Environment.getExternalStorageDirectory();
+        Log.e("ljong",f.getPath());
         setListView();
 
-        fileAdapter = new FileAdapter(this, data);
+        fileAdapter = new FileAdapter(this, data,YAHEI);
         listView.setAdapter(fileAdapter);
 
         // 注册监听器
@@ -163,7 +233,6 @@ public class ResourcesPicker extends BaseActivity {
 
     private void setListView(){
         data = f.listFiles();
-        Log.e("ljong",f.getPath());
         ArrayList<File> files = new ArrayList<>();
         for(File file:data){
             if(file.isDirectory()||file.getName().endsWith(selectFileEndsWith)){
@@ -172,10 +241,22 @@ public class ResourcesPicker extends BaseActivity {
         }
         data = files.toArray(new File[0]);
         Arrays.sort(data,cmp);
-        fileAdapter = new FileAdapter(ResourcesPicker.this, data);
+        fileAdapter = new FileAdapter(ResourcesPicker.this, data,YAHEI);
         listView.setAdapter(fileAdapter);
         resources_picket_now_path = (TextView)findViewById(R.id.resources_picket_now_path) ;
         resources_picket_now_path.setText(f.getPath());
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,int[] grantResults) {
+        if(requestCode==ASK_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                listViewInit();
+            } else {
+                Toast.makeText(ResourcesPicker.this,"你不给权限给我干嘛,小拳拳捶你胸，哼！",Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
     }
 
     @Override
