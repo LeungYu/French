@@ -116,7 +116,7 @@ public class VideoAddNewWord extends BaseActivity {
 
     //初始化
     protected void Init(){
-//        getExtra();//获取参数
+        getExtra();//获取参数
         screenPercentInit();//获取屏幕的宽高，生成与原型的相差比例
         screenInit();//屏幕初始化
         textGroupInit();//字体相关初始化
@@ -178,9 +178,7 @@ public class VideoAddNewWord extends BaseActivity {
             @Override
             public void onClick(View v) {
                 add_word_button.setVisibility(View.INVISIBLE);
-                if(DataSupport.select("word").where("word = ?",addWord).find(WordNote.class).size() == 0){
-                   stringInitTranslation(addWord.replaceAll("\\.|@|\\?|!|\"",""));
-                }
+                stringInitTranslation(addWord);
             }
         });
         add_word_button.setOnTouchListener(new View.OnTouchListener() {
@@ -547,9 +545,7 @@ public class VideoAddNewWord extends BaseActivity {
             right++;
             sum++;
         }else {
-            if (DataSupport.select("word").where("word = ?", testCaption).find(WordNote.class).size() == 0){
-                stringInitTranslation(testCaption.replaceAll("\\.|@|\\?|!|\"",""));
-            }
+            stringInitTranslation(testCaption);
             sum++;
             this.testStatus = testStatus;
             Intent intent = new Intent(VideoAddNewWord.this, TranslatorFrame.class);
@@ -558,7 +554,9 @@ public class VideoAddNewWord extends BaseActivity {
         }
     }
 
-    public void stringInitTranslation(final String target){
+    public void stringInitTranslation(String temp){
+        final String target = temp.replaceAll("\\.|@|\\?|!|\"","");
+        if (DataSupport.select("word").where("word = ?",target).find(WordNote.class).size() != 0)return;
         final String[] setter = {target,"",""};
         new Thread(){
             public void run(){
