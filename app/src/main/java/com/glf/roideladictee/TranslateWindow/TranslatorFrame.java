@@ -207,8 +207,8 @@ public class TranslatorFrame extends AppCompatActivity {
             }
         }.start();
     }
-    public String stringInitTranslation(){
-        final String[] setter = {""};
+    public String[]stringInitTranslation(){
+        final String[] setter = {"",""};
         new Thread(){
             public void run(){
                 Document doc=null;
@@ -223,18 +223,18 @@ public class TranslatorFrame extends AppCompatActivity {
                 }
                 try {
                     String wordType = doc.getElementById("ExpFCChild").getElementsByClass("cara").first().text();
-                    setter[0] += "【"+wordType+"】 ";
+                    setter[0] = wordType;
                 }
                 catch (Exception e){
-                    setter[0]="【NULL】 ";
+                    setter[0]="NULL";
                 }
                 try {
                     String wordMeaning=doc.getElementById("ExpFCChild").getElementsByClass("exp").first().text();
                     wordMeaning.substring(wordMeaning.indexOf("."),wordMeaning.length());
-                    setter[0] += wordMeaning;
+                    setter[1] = wordMeaning;
                 }
                 catch (Exception e){
-                    setter[0]="NULL";
+                    setter[1]="NULL";
                 }
                 updateCnTranslationHandler.sendEmptyMessage(0);
                 Message msg = new Message();
@@ -242,7 +242,7 @@ public class TranslatorFrame extends AppCompatActivity {
                 updateCnTranslationHandler.sendMessage(msg);
             }
         }.start();
-        return setter[0];
+        return setter;
     }
     public void  initExample(){
         new Thread(){
