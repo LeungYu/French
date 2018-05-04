@@ -18,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.glf.roideladictee.R;
+import com.glf.roideladictee.tools.MD5;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,6 +26,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by lenovo on 2018/4/25.
@@ -198,7 +204,30 @@ public class TranslatorFrame extends AppCompatActivity {
                     setter += wordMeaning;
                 }
                 catch (Exception e){
-                    setter="NULL";
+                    final OkHttpClient okHttpClient = new OkHttpClient();
+                    try {
+                        String url = "http://api.fanyi.baidu.com/api/trans/vip/translate?q=" + URLEncoder.encode(target, "utf-8") + "&from=fra&to=zh&appid=20180424000149913&salt=1&sign=" + MD5.md5("20180424000149913" + target + "1BqLy8Ld4b6hH61xdw4NM");
+                        final Request request_Login_Check = new Request.Builder()
+                                .url(url)
+                                .get()
+                                .build();
+                        Response response = null;
+                        response = okHttpClient.newCall(request_Login_Check).execute();
+                        String info = response.body().string();
+                        if (response.code() == 200) {
+                            System.out.println("完整内容："+info);
+                            String tar=info.substring(info.indexOf("\"dst\":\"")+7,info.indexOf("\"}]}"));
+                            System.out.println("分片内容："+tar);
+                            setter=MD5.decodeUnicode(tar);
+                        } else {
+                            setter="NULL";
+                            return;
+                        }
+                    }
+                    catch (Exception e1){
+                        setter="NULL";
+                        return;
+                    }
                 }
                 updateCnTranslationHandler.sendEmptyMessage(0);
                 Message msg = new Message();
