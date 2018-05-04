@@ -31,8 +31,10 @@ import com.glf.roideladictee.MyLitePal.WordNote;
 import com.glf.roideladictee.MyView.FullScreenVideoView;
 import com.glf.roideladictee.MyView.TestInputDialog;
 import com.glf.roideladictee.TranslateWindow.TranslatorFrame;
+import com.glf.roideladictee.fr_app.fr_contest;
 import com.glf.roideladictee.tools.BaseActivity;
 
+import org.json.JSONArray;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.litepal.crud.DataSupport;
@@ -46,6 +48,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
  * Created by 11951 on 2018-04-24.
  * 电影播放界面--两种模式：ADD（原本目的功能）TEST(扩展之后的功能)
@@ -57,6 +64,7 @@ public class VideoAddNewWord extends BaseActivity {
     private Button add_word_button;
     private Button play_button;
     private TextView movie_title;
+    private fr_contest frcontest;
 
     /*全局设置top*/
     private VideoMode videoMode = VideoMode.ADD;
@@ -94,7 +102,7 @@ public class VideoAddNewWord extends BaseActivity {
         private TestInputDialog testInputDialog;
         private int sum = 0;
         private int right = 0;
-        private float testMin =(float) 0.2;
+        private float testMin =(float) 0.1;
         /*TEST模式用end*/
     /*字幕用botton*/
 
@@ -130,9 +138,14 @@ public class VideoAddNewWord extends BaseActivity {
 
     //获取参数
     protected void getExtra(){
-        videoMode = (VideoMode) getIntent().getExtras().get("videoMode");
-        videoPath = getIntent().getExtras().getString("videoPath");
-        captionsPath = getIntent().getExtras().getString("captionsPath");
+        try {
+            videoMode = (VideoMode) getIntent().getExtras().get("videoMode");
+            videoPath = getIntent().getExtras().getString("videoPath");
+            captionsPath = getIntent().getExtras().getString("captionsPath");
+            frcontest = (fr_contest) getIntent().getSerializableExtra("fr_contest");
+        }catch (Exception e){
+            Log.e("ljong","这里会经常抛出，是正常现象.");
+        }
     }
 
     //获取屏幕的宽高，生成与原型的相差比例
@@ -179,6 +192,7 @@ public class VideoAddNewWord extends BaseActivity {
             public void onClick(View v) {
                 add_word_button.setVisibility(View.INVISIBLE);
                 stringInitTranslation(addWord);
+                add_word_php(addWord.replaceAll("\\.|@|\\?|!|\"",""));
             }
         });
         add_word_button.setOnTouchListener(new View.OnTouchListener() {
@@ -250,6 +264,9 @@ public class VideoAddNewWord extends BaseActivity {
                             Intent intent = new Intent(VideoAddNewWord.this, TestResult.class);
                             intent.putExtra("sum", sum);
                             intent.putExtra("right", right);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("fr_contest", frcontest);
+                            intent.putExtras(bundle);
                             startActivity(intent);
                             finish();
                         };
@@ -286,7 +303,9 @@ public class VideoAddNewWord extends BaseActivity {
                                         video_add_new_word_percent_relative_layout.removeView(testInputDialog);
                                         play_button.setVisibility(View.VISIBLE);
                                         if(testCaption.equals(testInputDialog.test_input.getText().toString()))setTestStatus(TestStatus.RIGHT);
-                                        else setTestStatus(TestStatus.WRONG);
+                                        else {
+                                            setTestStatus(TestStatus.WRONG);
+                                        }
                                         captionsRefresh(lastCaptions);
                                     }
                                 });
@@ -313,6 +332,11 @@ public class VideoAddNewWord extends BaseActivity {
                             Log.e("ljong","日常报错");
                         }
                         wordNote.save();
+                        break;
+                    case 0X12:
+                        String jsonData;
+                        jsonData = (String) msg.obj;
+                        if(!jsonData.equals("1")) Toast.makeText(VideoAddNewWord.this,jsonData,Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -546,6 +570,7 @@ public class VideoAddNewWord extends BaseActivity {
             sum++;
         }else {
             stringInitTranslation(testCaption);
+            wrong_word_php(testCaption.replaceAll("\\.|@|\\?|!|\"",""));
             sum++;
             this.testStatus = testStatus;
             Intent intent = new Intent(VideoAddNewWord.this, TranslatorFrame.class);
@@ -588,5 +613,64 @@ public class VideoAddNewWord extends BaseActivity {
                 handler.sendMessage(msg);
             }
         }.start();
+    }
+
+    protected void add_word_php(final String word){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final OkHttpClient okHttpClient = new OkHttpClient();
+                FormBody body = new FormBody.Builder()
+                        .add("phone_number", login_user)
+                        .add("new_word",word)
+                        .build();
+                final Request request = new Request.Builder()
+                        .url("http://fr.xsinweb.com/fr/service/Add_New_Word.php")
+                        .post(body)
+                        .build();
+                try {
+                    Response response = null;
+                    response = okHttpClient.newCall(request).execute();
+                    String getInfo = response.body().string();
+                    if (response.code() == 200) {
+                        Message message = new Message();
+                        message.what = 0X12;
+                        message.obj = getInfo;
+                        handler.sendMessage(message);
+                    }
+                }catch (Exception e){
+
+                }
+            }
+        }).start();
+    }
+    protected void wrong_word_php(final String word){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final OkHttpClient okHttpClient = new OkHttpClient();
+                FormBody body = new FormBody.Builder()
+                        .add("phone_number", login_user)
+                        .add("wrong_word",word)
+                        .build();
+                final Request request = new Request.Builder()
+                        .url("http://fr.xsinweb.com/fr/service/Add_Wrong_Word.php")
+                        .post(body)
+                        .build();
+                try {
+                    Response response = null;
+                    response = okHttpClient.newCall(request).execute();
+                    String getInfo = response.body().string();
+                    if (response.code() == 200) {
+                        Message message = new Message();
+                        message.what = 0X12;
+                        message.obj = getInfo;
+                        handler.sendMessage(message);
+                    }
+                }catch (Exception e){
+
+                }
+            }
+        }).start();
     }
 }

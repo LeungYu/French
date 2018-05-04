@@ -314,17 +314,15 @@ public class IndexPage extends BaseActivity {
         index_page_contest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IndexPage.this, ResourcesPicker.class);
-                intent.putExtra("videoMode", VideoMode.TEST);
+                Intent intent = new Intent(IndexPage.this, ParticipatedContestList.class);
                 startActivity(intent);
             }
         });
         index_page_join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(IndexPage.this, ResourcesPicker.class);
-//                intent.putExtra("videoMode", VideoMode.ADD);
-//                startActivity(intent);
+                Intent intent = new Intent(IndexPage.this, ParticipateContestList.class);
+                startActivity(intent);
             }
         });
         index_page_dictionary.setOnClickListener(new View.OnClickListener() {

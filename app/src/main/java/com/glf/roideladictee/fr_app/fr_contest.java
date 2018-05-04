@@ -1,17 +1,22 @@
 package com.glf.roideladictee.fr_app;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by 11951 on 2018-05-04.
  */
 
-public class fr_contest {
+public class fr_contest implements Serializable {
     String contest_id;
     Date contest_datetime;
     String movie_name;
     String mov_file;
     String mov_srt;
+
+    public fr_contest(){
+
+    }
 
     public fr_contest(String contest_id, Date contest_datetime, String movie_name, String mov_file, String mov_srt) {
         this.contest_id = contest_id;

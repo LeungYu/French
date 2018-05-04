@@ -57,8 +57,8 @@
     <string name="index_page_sign_off_tips">是否要退出影听？</string>
     <!--video_add_new_word-->
     <string name="movie_title">当前播放： </string>
-    <string name="test_head_sign">（听写模式）</string>
-    <string name="test_result_title">听写完成</string>
+    <string name="test_head_sign">（比赛模式）</string>
+    <string name="test_result_title">比赛完成</string>
     <!--test_input_dialog-->
     <string name="test_input_dialog_title">字幕听写</string>
     <string name="test_input_dialog_ok">确 定</string>
@@ -78,6 +78,7 @@
     <string name="resources_picket_now_path_title">当前路径：</string>
     <string name="resources_picket_selected_title">已选择</string>
     <string name="resources_picket_noselect_title">未选择</string>
+    <string name="resources_picket_please_select">请选择</string>
     <string name="resources_picket_next">下一步</string>
     <string name="resources_picket_ok">完成</string>
     <!--FileAdapter-->
@@ -87,4 +88,11 @@
     <string name="word_note_list_cancel_delete">返 回</string>
     <string name="word_note_list_delete">删 除</string>
     <string name="word_num">个单词</string>
+    <!--participate_contest-->
+    <string name="participa_contest_title">选择要参加的比赛</string>
+    <string name="participa_contest_participate">参 加</string>
+    <string name="participa_contest_back">返 回</string>
+    <!--ParticipatedContestList-->
+    <string name="participated_contest_title">选择要进行的比赛</string>
+    <string name="participated_contest_start">开 始</string>
 </resources>

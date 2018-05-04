@@ -26,7 +26,7 @@ import java.util.List;
 public class BaseActivity extends AppCompatActivity {
     protected static boolean isFirst=true;
     protected static boolean isLogin=false;
-    protected static String login_user;
+    protected static String login_user = "13590799319";
     protected ActivityController activityController;
     protected HomeWatcherReceiver homewatcherreceiver;
     protected static NotificationManager myManager;
