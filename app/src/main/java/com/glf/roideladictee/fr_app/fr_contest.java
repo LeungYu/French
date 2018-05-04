@@ -1,4 +1,4 @@
-package com.glf.roideladictee.MyClass;
+package com.glf.roideladictee.fr_app;
 
 import java.util.Date;
 

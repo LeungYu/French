@@ -1,4 +1,4 @@
-package com.glf.roideladictee.MyClass;
+package com.glf.roideladictee.fr_app;
 
 /**
  * Created by 11951 on 2018-05-04.
