@@ -18,7 +18,6 @@
         </activity>
         <activity
             android:name=".TranslateWindow.TranslatorFrame"
-            android:screenOrientation="landscape"
             android:theme="@style/MyDialogActivityStyle" />
         <activity
             android:name=".LoginPage"
@@ -33,14 +32,9 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".VideoAddNewWord"
-            android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:theme="@style/MyVideoStyle">
         </activity>
@@ -48,6 +42,10 @@
             android:name=".LaunchScreen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".TestResult"

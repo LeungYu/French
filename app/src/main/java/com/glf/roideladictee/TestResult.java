@@ -146,6 +146,7 @@ public class TestResult extends BaseActivity {
 
     protected void finishContest_php(){
         percentRelativeLayout.addView(loadingPHP);
+        Log.e("ljong",login_user+" "+frcontest.getContest_id()+" "+score);
         new Thread(new Runnable() {
             @Override
             public void run() {

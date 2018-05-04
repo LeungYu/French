@@ -651,7 +651,7 @@ public class VideoAddNewWord extends BaseActivity {
                 final OkHttpClient okHttpClient = new OkHttpClient();
                 FormBody body = new FormBody.Builder()
                         .add("phone_number", login_user)
-                        .add("wrong_word",word)
+                        .add("new_word",word)
                         .build();
                 final Request request = new Request.Builder()
                         .url("http://fr.xsinweb.com/fr/service/Add_Wrong_Word.php")

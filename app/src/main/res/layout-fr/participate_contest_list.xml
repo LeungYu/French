@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/participate_contest_layout"
+    android:background="@android:color/white">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        app:layout_heightPercent="8%"
+        android:id="@+id/head_bar"
+        android:background="#199900">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="@string/participa_contest_title"
+            android:id="@+id/title"
+            android:layout_centerInParent="true"
+            android:textSize="20sp"/>
+    </android.support.percent.PercentRelativeLayout>
+    <ImageView
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:id="@+id/divide2"
+        android:layout_above="@+id/botton_bar"
+        android:layout_centerHorizontal="true"
+        android:background="@color/gray" />
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        app:layout_heightPercent="8%"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:id="@+id/botton_bar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_marginLeftPercent="3%"
+            android:text="@string/resources_picket_noselect_title"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:id="@+id/selected_title"
+            android:textColor="@android:color/black" />
+        <Button
+            app:layout_heightPercent="60%"
+            app:layout_aspectRatio="250%"
+            android:background="@drawable/green_button"
+            android:text="@string/participa_contest_participate"
+            android:textColor="@android:color/white"
+            android:layout_toStartOf="@+id/back_button"
+            android:textSize="16sp"
+            android:id="@+id/participate_button"
+            android:layout_centerVertical="true"
+            android:textAlignment="center"
+            app:layout_marginRightPercent="5%"/>
+        <Button
+            app:layout_heightPercent="60%"
+            app:layout_aspectRatio="250%"
+            android:background="@drawable/green_button"
+            android:text="@string/participa_contest_back"
+            android:textColor="@android:color/white"
+            android:layout_alignParentEnd="true"
+            android:textSize="16sp"
+            android:id="@+id/back_button"
+            android:layout_centerVertical="true"
+            android:textAlignment="center"
+            app:layout_marginRightPercent="5%"/>
+    </android.support.percent.PercentRelativeLayout>
+    <ListView
+        app:layout_widthPercent="95%"
+        android:layout_below="@+id/head_bar"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/listView"
+        android:layout_above="@+id/divide2"
+        android:divider="@color/gray"
+        android:dividerHeight="1dp" />
+</android.support.percent.PercentRelativeLayout>

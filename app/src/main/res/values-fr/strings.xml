@@ -78,8 +78,21 @@
     <string name="resources_picket_now_path_title">Chemin：</string>
     <string name="resources_picket_selected_title">Sélectionné</string>
     <string name="resources_picket_noselect_title">Non sélectionné</string>
+    <string name="resources_picket_please_select">请选择</string>
     <string name="resources_picket_next">L\'étape suivante</string>
     <string name="resources_picket_ok">Fini</string>
     <!--FileAdapter-->
     <string name="folder_num">dossiers</string>
+    <!--word_note_list-->
+    <string name="word_note_list_title">生词本</string>
+    <string name="word_note_list_cancel_delete">返 回</string>
+    <string name="word_note_list_delete">删 除</string>
+    <string name="word_num">个单词</string>
+    <!--participate_contest-->
+    <string name="participa_contest_title">选择要参加的比赛</string>
+    <string name="participa_contest_participate">参 加</string>
+    <string name="participa_contest_back">返 回</string>
+    <!--ParticipatedContestList-->
+    <string name="participated_contest_title">选择要进行的比赛</string>
+    <string name="participated_contest_start">开 始</string>
 </resources>
