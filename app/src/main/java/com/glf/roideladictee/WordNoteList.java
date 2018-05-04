@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.glf.roideladictee.MyAdapter.FileAdapter;
 import com.glf.roideladictee.MyAdapter.ParticipateCotestAdapter;
@@ -62,28 +63,7 @@ public class WordNoteList extends BaseActivity {
             switch (msg.what) {
                 case 0X12:
                     jsonData = (String) msg.obj;
-                    try {
-                        jsonArray = new JSONArray(jsonData);
-//                        fr_contestList.clear();
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                            fr_contest frContest = new fr_contest();
-//                            frContest.setContest_id(jsonObject.getString("contest_id"));
-//                            try {
-//                                frContest.setContest_datetime(sdf.parse(jsonObject.getString("contest_datetime")));
-//                            } catch (ParseException e) {
-//                                e.printStackTrace();
-//                            }
-//                            frContest.setMovie_name(jsonObject.getString("movie_name"));
-//                            frContest.setMov_file(jsonObject.getString("mov_file"));
-//                            frContest.setMov_srt(jsonObject.getString("mov_srt"));
-//                            fr_contestList.add(frContest);
-//                        }
-
-                    }  catch (JSONException e) {
-                        e.printStackTrace();
-                        Log.e("ljong","ERROR");
-                    }
+                    if(!jsonData.equals("1")) Toast.makeText(WordNoteList.this,"ERROR",Toast.LENGTH_LONG).show();
                     break;
             }
         }

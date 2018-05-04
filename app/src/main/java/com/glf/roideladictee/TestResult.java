@@ -55,7 +55,7 @@ public class TestResult extends BaseActivity {
             switch (msg.what) {
                 case 0X12:
                     jsonData = (String) msg.obj;
-                    if(!jsonData.equals("1")) Toast.makeText(TestResult.this,jsonData,Toast.LENGTH_LONG).show();
+                    if(!jsonData.equals("1")) Toast.makeText(TestResult.this,"ERROR",Toast.LENGTH_LONG).show();
                     break;
             }
         }
