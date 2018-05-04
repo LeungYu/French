@@ -1,18 +1,15 @@
 package com.glf.roideladictee;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -30,14 +27,14 @@ import com.glf.roideladictee.MyEnum.VideoMode;
 import com.glf.roideladictee.tools.BaseActivity;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created by 11951 on 2018-05-02.
+ * 文件管理器
+ * 两个模式:.mp4,.ass
  */
 
 public class ResourcesPicker extends BaseActivity {
@@ -65,6 +62,7 @@ public class ResourcesPicker extends BaseActivity {
 
     protected void Init(){
         getExtra();//获取参数
+        comparatorInit();//排序规则初始化
         textGroupInit();//字体相关初始化
         askPermission();//访问权限
         buttonGroupInit();//按钮相关初始化
@@ -82,6 +80,11 @@ public class ResourcesPicker extends BaseActivity {
         }
         if (selectFileEndsWith == null)selectFileEndsWith = ".mp4";
         if(videoMode ==null)videoMode=VideoMode.ADD;
+    }
+
+    //排序规则初始化
+    protected void comparatorInit(){
+        cmp = new FileComparator();
     }
 
     //访问权限
@@ -127,10 +130,26 @@ public class ResourcesPicker extends BaseActivity {
 
     //字体相关初始化
     protected void textGroupInit(){
+        textTypefaceInit();//字体初始化
+        textSet();//文字初始化
+    }
+
+    //字体初始化
+    protected void textTypefaceInit(){
         YAHEI = Typeface.createFromAsset(getAssets(), "fonts/YAHEI.ttc");
         int textViewIds[] = {R.id.title,R.id.resources_picket_now_path_title,R.id.resources_picket_now_path,R.id.resources_picket_selected_title,R.id.resources_picket_selected};
         for(int textViewId:textViewIds){
             ((TextView)findViewById(textViewId)).getPaint().setTypeface(YAHEI);
+        }
+    }
+
+    //文字初始化
+    protected void textSet(){
+        TextView title = (TextView)findViewById(R.id.title);
+        if(selectFileEndsWith == ".mp4"){
+            title.setText(getResources().getString(R.string.resources_picket_title_mp4));
+        }else{
+            title.setText(getResources().getString(R.string.resources_picket_title_ass));
         }
     }
 
@@ -169,12 +188,6 @@ public class ResourcesPicker extends BaseActivity {
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == 0) {
-                    button.setAlpha(0.75f);
-                }
-                if (event.getAction() == 1 || event.getAction() == 3) {
-                    button.setAlpha(1f);
-                }
                 return false;
             }
         });
@@ -193,11 +206,7 @@ public class ResourcesPicker extends BaseActivity {
     private void listViewInit() {
         listView = (ListView) findViewById(R.id.listView);
         f = Environment.getExternalStorageDirectory();
-        Log.e("ljong",f.getPath());
         setListView();
-
-        fileAdapter = new FileAdapter(this, data,YAHEI);
-        listView.setAdapter(fileAdapter);
 
         // 注册监听器
         listView.setOnItemClickListener(
@@ -231,6 +240,7 @@ public class ResourcesPicker extends BaseActivity {
         );
     }
 
+    // 设置ListView数据
     private void setListView(){
         data = f.listFiles();
         ArrayList<File> files = new ArrayList<>();

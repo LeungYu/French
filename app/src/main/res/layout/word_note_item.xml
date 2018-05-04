@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:descendantFocusability="blocksDescendants">
+
+    <ImageView
+        app:layout_widthPercent="16%"
+        app:layout_aspectRatio="120%"
+        android:id="@+id/block"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ljong"
+        android:id="@+id/word"
+        android:layout_alignTop="@+id/block"
+        android:textSize="18sp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="网络获取中"
+        android:id="@+id/word_info"
+        android:layout_alignBottom="@+id/block"
+        android:layout_alignLeft="@+id/word"
+        android:layout_alignStart="@+id/word"
+        android:textSize="12sp"
+        android:textColor="@color/gray" />
+
+    <ImageButton
+        app:layout_widthPercent="5%"
+        app:layout_aspectRatio="100%"
+        android:id="@+id/imageButton_action"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:background="@drawable/button_action"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless.Small" />
+
+</android.support.percent.PercentRelativeLayout>

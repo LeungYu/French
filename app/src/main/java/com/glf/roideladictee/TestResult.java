@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by 11951 on 2018-05-02.
+ * 测试结果界面
  */
 
 public class TestResult extends BaseActivity {

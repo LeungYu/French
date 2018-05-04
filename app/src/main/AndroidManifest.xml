@@ -32,21 +32,22 @@
             android:name=".IndexPage"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme_NoBar" />
+            android:theme="@style/AppTheme_NoBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".VideoAddNewWord"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
-            android:theme="@style/MyVideoStyle"></activity>
+            android:theme="@style/MyVideoStyle">
+        </activity>
         <activity
             android:name=".LaunchScreen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".TestResult"
@@ -55,7 +56,11 @@
         <activity
             android:name=".ResourcesPicker"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme_NoBar"></activity>
+            android:theme="@style/AppTheme_NoBar">
+        </activity>
+        <activity android:name=".WordNoteList"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_NoBar" />
     </application>
 
 </manifest>
