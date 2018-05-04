@@ -47,7 +47,7 @@
         app:layout_heightPercent="8.66%"
         android:id="@+id/head_bar"
         android:clickable="true"
-        android:background="#001e4e">
+        android:background="#199900">
         <com.glf.roideladictee.MyView.BackButton
             android:background="@drawable/back"
             android:id="@+id/back"

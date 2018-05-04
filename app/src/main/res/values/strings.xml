@@ -73,7 +73,8 @@
     <string name="test_sum_word_wrong_notes">错误词数： </string>
     <string name="test_result_ok">完 成</string>
     <!--resources_picket-->
-    <string name="resources_picket_title">选择电影和字幕</string>
+    <string name="resources_picket_title_mp4">选择电影</string>
+    <string name="resources_picket_title_ass">选择字幕</string>
     <string name="resources_picket_now_path_title">当前路径：</string>
     <string name="resources_picket_selected_title">已选择</string>
     <string name="resources_picket_noselect_title">未选择</string>
@@ -81,4 +82,7 @@
     <string name="resources_picket_ok">完成</string>
     <!--FileAdapter-->
     <string name="folder_num">个文件</string>
+    <!--word_note_list-->
+    <string name="word_note_list_title">生词本</string>
+    <string name="word_note_list_delete">删除</string>
 </resources>

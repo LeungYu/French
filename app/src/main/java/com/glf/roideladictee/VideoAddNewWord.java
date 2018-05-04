@@ -1,16 +1,13 @@
 package com.glf.roideladictee;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Message;
 import android.support.percent.PercentRelativeLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +16,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +25,6 @@ import android.widget.VideoView;
 import com.glf.roideladictee.MyAdapter.CaptionAdapter;
 import com.glf.roideladictee.MyEnum.TestStatus;
 import com.glf.roideladictee.MyEnum.VideoMode;
-import com.glf.roideladictee.MyEnum.WordNoteType;
 import com.glf.roideladictee.MyLayoutManager.CaptionLayoutManager;
 import com.glf.roideladictee.MyLitePal.CaptionAss;
 import com.glf.roideladictee.MyLitePal.WordNote;
@@ -38,12 +33,15 @@ import com.glf.roideladictee.MyView.TestInputDialog;
 import com.glf.roideladictee.TranslateWindow.TranslatorFrame;
 import com.glf.roideladictee.tools.BaseActivity;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.litepal.crud.DataSupport;
 import org.litepal.tablemanager.Connector;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +59,12 @@ public class VideoAddNewWord extends BaseActivity {
     private TextView movie_title;
 
     /*全局设置top*/
-    private VideoMode videoMode = VideoMode.TEST;
+    private VideoMode videoMode = VideoMode.ADD;
     /*全局设置botton*/
+
+    /*其他handler what值top*/
+    private static final int TRANS = 1101;
+    /*其他handler what值botton*/
 
     /*外用top*/
     public static int percentx= 1,percenty = 1;//CaptionAdapter,MyLayoutManager遵循这个屏幕缩放比例
@@ -99,9 +101,9 @@ public class VideoAddNewWord extends BaseActivity {
     /*视频用top*/
     private int endTime = -1;
     private VideoView videoView;
-    private String videoPath = "content://media/external/video/media/325777";
+    private String videoPath = "storage/emulated/0/french/test.mp4";
     private Uri videoUrl;
-    private static final int PLAY = 1110;
+    private static final int PLAY = 1111,LOADING = 1110;
     Handler handler;
     /*视频用botton*/
 
@@ -114,7 +116,7 @@ public class VideoAddNewWord extends BaseActivity {
 
     //初始化
     protected void Init(){
-        getExtra();//获取参数
+//        getExtra();//获取参数
         screenPercentInit();//获取屏幕的宽高，生成与原型的相差比例
         screenInit();//屏幕初始化
         textGroupInit();//字体相关初始化
@@ -176,11 +178,8 @@ public class VideoAddNewWord extends BaseActivity {
             @Override
             public void onClick(View v) {
                 add_word_button.setVisibility(View.INVISIBLE);
-                if(DataSupport.select("word").where("word = ? and wordNoteType = ?",addWord,"ADDNEWWORD").find(WordNote.class).size() == 0){
-                    WordNote wordNote = new WordNote();
-                    wordNote.setWord(addWord);
-                    wordNote.setWordNoteType(WordNoteType.ADDNEWWORD);
-                    wordNote.save();
+                if(DataSupport.select("word").where("word = ?",addWord).find(WordNote.class).size() == 0){
+                   stringInitTranslation(addWord.replaceAll("\\.|@|\\?|!|\"",""));
                 }
             }
         });
@@ -230,7 +229,7 @@ public class VideoAddNewWord extends BaseActivity {
 
     //视频相关初始化
     protected void videoGroupInit(){
-        captionsHandlerInit();//字幕同步handler型线程
+        handlerInit();//handler初始化
         captionsInit();//字幕容器RecyclerView初始化
         captionsAssDBInit();//字幕Ass数据库初始化
         videoViewInit();//视频屏幕及源初始化
@@ -242,12 +241,12 @@ public class VideoAddNewWord extends BaseActivity {
         }).start();
     }
 
-    //字幕同步handler型线程
-    protected void captionsHandlerInit(){
+    //handler初始化
+    protected void handlerInit(){
         handler=new Handler(){
             public void handleMessage(Message msg){
                 switch (msg.what) {
-                    case PLAY:
+                    case PLAY://字幕同步handler型线程
                         if (!playing) break;
                         if(videoMode == VideoMode.TEST && videoView.getCurrentPosition() >= seeToWhere + testMin * 60 * 1000){
                             Intent intent = new Intent(VideoAddNewWord.this, TestResult.class);
@@ -302,9 +301,20 @@ public class VideoAddNewWord extends BaseActivity {
                         }
                         handler.sendEmptyMessageDelayed(PLAY,500);
                         break;
-                    case 200:
+                    case LOADING://载入资源LOADING完成
                         findViewById(R.id.loading).setVisibility(View.INVISIBLE);
                         videoPlay();
+                        break;
+                    case TRANS:
+                        String[] setter = (String[])msg.obj;
+                        WordNote wordNote = new WordNote();
+                        try{
+                            wordNote.setWord(""+setter[0]);
+                            wordNote.setInfo(""+setter[1]+setter[2]);
+                        }catch (Exception e){
+                            Log.e("ljong","日常报错");
+                        }
+                        wordNote.save();
                         break;
                 }
             }
@@ -393,7 +403,7 @@ public class VideoAddNewWord extends BaseActivity {
                 }
                 isr.close();
                 br.close();
-                handler.sendEmptyMessage(200);
+                handler.sendEmptyMessage(LOADING);
             }else {
                 Toast.makeText(getApplicationContext(),"字幕不存在",Toast.LENGTH_SHORT).show();
             }
@@ -513,7 +523,8 @@ public class VideoAddNewWord extends BaseActivity {
             for(String mcaption:mcaptions) {
                 captions.add(mcaption);
                 if (videoMode == VideoMode.TEST) {
-                    if (!firstCaptions && !hasSetTestCaption && mcaption.length() > testCaptionMinLength && Math.random() > numPercentCaption) {
+                    if (!firstCaptions && !hasSetTestCaption && mcaption.length() > testCaptionMinLength
+                            && mcaption.indexOf('\'')==-1 && mcaption.indexOf('-')==-1 && Math.random() > numPercentCaption) {
                         hasSetTestCaption = true;
                         testCaption = mcaption.replaceAll("\\.|@|\\?|!|\"","");
                         isTestCaptions.add(true);
@@ -536,11 +547,8 @@ public class VideoAddNewWord extends BaseActivity {
             right++;
             sum++;
         }else {
-            if (DataSupport.select("word").where("word = ? and wordNoteType = ?", testCaption, "IDONTKNOW").find(WordNote.class).size() == 0){
-                WordNote wordNote = new WordNote();
-                wordNote.setWord(testCaption);
-                wordNote.setWordNoteType(WordNoteType.IDONTKNOW);
-                wordNote.save();
+            if (DataSupport.select("word").where("word = ?", testCaption).find(WordNote.class).size() == 0){
+                stringInitTranslation(testCaption.replaceAll("\\.|@|\\?|!|\"",""));
             }
             sum++;
             this.testStatus = testStatus;
@@ -548,5 +556,39 @@ public class VideoAddNewWord extends BaseActivity {
             intent.putExtra("target", testCaption);
             startActivity(intent);
         }
+    }
+
+    public void stringInitTranslation(final String target){
+        final String[] setter = {target,"",""};
+        new Thread(){
+            public void run(){
+                Document doc=null;
+                try {
+                    doc = Jsoup.connect("http://www.frdic.com/dicts/fr/"+target).get();
+                } catch (IOException e) {
+                    return;
+                }
+                try {
+                    String wordType = doc.getElementById("ExpFCChild").getElementsByClass("cara").first().text();
+                    setter[1] = wordType;
+                }
+                catch (Exception e){
+                    setter[1]="NULL";
+                }
+                try {
+                    String wordMeaning=doc.getElementById("ExpFCChild").getElementsByClass("exp").first().text();
+                    wordMeaning.substring(wordMeaning.indexOf(","),wordMeaning.length());
+                    setter[2] = wordMeaning;
+                }
+                catch (Exception e){
+                    setter[2]="NULL";
+                }
+
+                Message msg = new Message();
+                msg.obj = setter;
+                msg.what = TRANS;
+                handler.sendMessage(msg);
+            }
+        }.start();
     }
 }

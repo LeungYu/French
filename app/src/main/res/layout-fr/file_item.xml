@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:descendantFocusability="blocksDescendants">
+
+    <ImageView
+        app:layout_widthPercent="16%"
+        app:layout_aspectRatio="100%"
+        android:id="@+id/imageView_icon"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_folder"/>
+
+    <ImageView
+        app:layout_widthPercent="5%"
+        android:layout_height="wrap_content"
+        android:id="@+id/block"
+        android:layout_toRightOf="@+id/imageView_icon"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/textView_name"
+        android:layout_alignTop="@+id/imageView_icon"
+        android:layout_toRightOf="@+id/block"
+        android:layout_toEndOf="@+id/block"
+        android:textSize="18sp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/textView_info"
+        android:layout_alignBottom="@+id/imageView_icon"
+        android:layout_alignLeft="@+id/textView_name"
+        android:layout_alignStart="@+id/textView_name"
+        android:textSize="12sp"
+        android:textColor="@color/gray" />
+
+    <ImageButton
+        app:layout_widthPercent="5%"
+        app:layout_aspectRatio="100%"
+        android:id="@+id/imageButton_action"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:background="@drawable/button_action"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless.Small" />
+
+</android.support.percent.PercentRelativeLayout>

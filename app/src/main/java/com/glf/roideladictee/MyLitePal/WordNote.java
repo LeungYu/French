@@ -1,7 +1,5 @@
 package com.glf.roideladictee.MyLitePal;
 
-import com.glf.roideladictee.MyEnum.WordNoteType;
-
 import org.litepal.crud.DataSupport;
 
 /**
@@ -11,7 +9,15 @@ import org.litepal.crud.DataSupport;
 public class WordNote extends DataSupport {
     int id;
     String word;
-    String wordNoteType;
+    String info;
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
     public int getId() {
         return id;
@@ -29,11 +35,4 @@ public class WordNote extends DataSupport {
         this.word = word;
     }
 
-    public String getWordNoteType() {
-        return wordNoteType;
-    }
-
-    public void setWordNoteType(WordNoteType wordNoteType) {
-        this.wordNoteType = wordNoteType == WordNoteType.ADDNEWWORD?"ADDNEWWORD":"IDONTKNOW";
-    }
 }

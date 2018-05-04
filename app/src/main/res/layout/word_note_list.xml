@@ -1,65 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white">
+
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         app:layout_heightPercent="8%"
         android:id="@+id/head_bar"
-        android:background="#199900">
+        android:background="#001e4e">
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:text="@string/resources_picket_title_mp4"
+            android:text="@string/word_note_list_title"
             android:id="@+id/title"
             android:layout_centerInParent="true"
             android:textSize="20sp"/>
+        <Button
+            app:layout_heightPercent="60%"
+            app:layout_aspectRatio="100%"
+            android:background="@drawable/delete"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:layout_marginRightPercent="3%"/>
     </android.support.percent.PercentRelativeLayout>
-    <android.support.percent.PercentRelativeLayout
-        android:layout_width="match_parent"
-        app:layout_heightPercent="6%"
-        android:layout_below="@+id/head_bar"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:id="@+id/resources_picket_now_path_linerlayout">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_marginLeftPercent="3%"
-            android:text="@string/resources_picket_now_path_title"
-            android:textSize="14sp"
-            android:id="@+id/resources_picket_now_path_title"
-            android:textColor="@android:color/black" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/resources_picket_now_path_title"
-            android:text="/storage/sdcard0/movie"
-            android:textSize="14sp"
-            android:textColor="#da1911"
-            android:id="@+id/resources_picket_now_path"/>
-    </android.support.percent.PercentRelativeLayout >
-    <ImageView
-        android:layout_height="1dp"
-        app:layout_widthPercent="95%"
-        android:layout_below="@+id/resources_picket_now_path_linerlayout"
-        android:id="@+id/divide"
-        android:layout_centerHorizontal="true"
-        android:background="@color/gray" />
     <ImageView
         android:layout_height="1dp"
         android:layout_width="match_parent"
-        android:layout_above="@+id/botton_bar"
         android:id="@+id/divide2"
+        android:visibility="gone"
+        android:layout_above="@+id/botton_bar"
         android:layout_centerHorizontal="true"
         android:background="@color/gray" />
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         app:layout_heightPercent="8%"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:orientation="horizontal"
         android:id="@+id/botton_bar">
 
         <TextView
@@ -69,22 +49,22 @@
             android:text="@string/resources_picket_noselect_title"
             android:textSize="14sp"
             android:layout_centerVertical="true"
-            android:id="@+id/resources_picket_selected_title"
+            android:id="@+id/selected_title"
             android:textColor="@android:color/black" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/resources_picket_selected_title"
+            android:layout_toRightOf="@+id/selected_title"
             app:layout_marginLeftPercent="1%"
             android:layout_centerVertical="true"
             android:textSize="16sp"
             android:textColor="#da1911"
-            android:id="@+id/resources_picket_selected"/>
+            android:id="@+id/selected"/>
         <Button
             app:layout_heightPercent="60%"
             app:layout_aspectRatio="250%"
             android:background="@drawable/green_button"
-            android:text="@string/resources_picket_next"
+            android:text="@string/word_note_list_delete"
             android:textColor="@android:color/white"
             android:layout_alignParentEnd="true"
             android:textSize="16sp"
@@ -95,9 +75,9 @@
     </android.support.percent.PercentRelativeLayout>
     <ListView
         app:layout_widthPercent="95%"
+        android:layout_below="@+id/head_bar"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/divide"
         android:id="@+id/listView"
         android:layout_above="@+id/divide2"
         android:divider="@color/gray"
