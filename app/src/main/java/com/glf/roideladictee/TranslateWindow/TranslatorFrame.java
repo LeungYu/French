@@ -218,14 +218,14 @@ public class TranslatorFrame extends AppCompatActivity {
                             System.out.println("完整内容："+info);
                             String tar=info.substring(info.indexOf("\"dst\":\"")+7,info.indexOf("\"}]}"));
                             System.out.println("分片内容："+tar);
-                            setter=MD5.decodeUnicode(tar);
+                            setter="【NULL】 "+MD5.decodeUnicode(tar);
                         } else {
-                            setter="NULL";
+                            setter="【NULL】 NULL";
                             return;
                         }
                     }
                     catch (Exception e1){
-                        setter="NULL";
+                        setter="【NULL】 NULL";
                         return;
                     }
                 }
