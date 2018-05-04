@@ -61,6 +61,12 @@
         <activity android:name=".WordNoteList"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoBar" />
+        <activity android:name=".ParticipateContestList"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_NoBar"  />
+        <activity android:name=".ParticipatedContestList"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme_NoBar"  />
     </application>
 
 </manifest>

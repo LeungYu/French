@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/word_note_layout"
+    android:id="@+id/participate_contest_layout"
     android:background="@android:color/white">
 
     <android.support.percent.PercentRelativeLayout
@@ -15,31 +15,21 @@
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:text="@string/word_note_list_title"
+            android:text="@string/participa_contest_title"
             android:id="@+id/title"
             android:layout_centerInParent="true"
             android:textSize="20sp"/>
-        <Button
-            app:layout_heightPercent="60%"
-            app:layout_aspectRatio="100%"
-            android:background="@drawable/delete"
-            android:id="@+id/delete_button"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            app:layout_marginRightPercent="3%"/>
     </android.support.percent.PercentRelativeLayout>
     <ImageView
         android:layout_height="1dp"
         android:layout_width="match_parent"
         android:id="@+id/divide2"
-        android:visibility="gone"
         android:layout_above="@+id/botton_bar"
         android:layout_centerHorizontal="true"
         android:background="@color/gray" />
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         app:layout_heightPercent="8%"
-        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:id="@+id/botton_bar">
@@ -53,36 +43,27 @@
             android:layout_centerVertical="true"
             android:id="@+id/selected_title"
             android:textColor="@android:color/black" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/selected_title"
-            app:layout_marginLeftPercent="1%"
-            android:text=""
-            android:layout_centerVertical="true"
-            android:textSize="16sp"
-            android:textColor="#da1911"
-            android:id="@+id/selected"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/selected"
-            app:layout_marginLeftPercent="1%"
-            android:text="@string/word_num"
-            android:layout_centerVertical="true"
-            android:textSize="16sp"
-            android:visibility="invisible"
-            android:textColor="@android:color/black"
-            android:id="@+id/word_num"/>
         <Button
             app:layout_heightPercent="60%"
             app:layout_aspectRatio="250%"
             android:background="@drawable/green_button"
-            android:text="@string/word_note_list_cancel_delete"
+            android:text="@string/participa_contest_participate"
+            android:textColor="@android:color/white"
+            android:layout_toStartOf="@+id/back_button"
+            android:textSize="16sp"
+            android:id="@+id/participate_button"
+            android:layout_centerVertical="true"
+            android:textAlignment="center"
+            app:layout_marginRightPercent="5%"/>
+        <Button
+            app:layout_heightPercent="60%"
+            app:layout_aspectRatio="250%"
+            android:background="@drawable/green_button"
+            android:text="@string/participa_contest_back"
             android:textColor="@android:color/white"
             android:layout_alignParentEnd="true"
             android:textSize="16sp"
-            android:id="@+id/button"
+            android:id="@+id/back_button"
             android:layout_centerVertical="true"
             android:textAlignment="center"
             app:layout_marginRightPercent="5%"/>
