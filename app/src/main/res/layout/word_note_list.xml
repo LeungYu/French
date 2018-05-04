@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         app:layout_heightPercent="8%"
         android:id="@+id/head_bar"
-        android:background="#001e4e">
+        android:background="#199900">
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
@@ -22,6 +22,7 @@
             app:layout_heightPercent="60%"
             app:layout_aspectRatio="100%"
             android:background="@drawable/delete"
+            android:id="@+id/delete_button"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             app:layout_marginRightPercent="3%"/>
@@ -37,8 +38,8 @@
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         app:layout_heightPercent="8%"
-        android:layout_alignParentBottom="true"
         android:visibility="gone"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:id="@+id/botton_bar">
 
@@ -47,7 +48,7 @@
             android:layout_height="wrap_content"
             app:layout_marginLeftPercent="3%"
             android:text="@string/resources_picket_noselect_title"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:layout_centerVertical="true"
             android:id="@+id/selected_title"
             android:textColor="@android:color/black" />
@@ -56,15 +57,27 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/selected_title"
             app:layout_marginLeftPercent="1%"
+            android:text=""
             android:layout_centerVertical="true"
             android:textSize="16sp"
             android:textColor="#da1911"
             android:id="@+id/selected"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/selected"
+            app:layout_marginLeftPercent="1%"
+            android:text="@string/word_num"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:visibility="invisible"
+            android:textColor="@android:color/black"
+            android:id="@+id/word_num"/>
         <Button
             app:layout_heightPercent="60%"
             app:layout_aspectRatio="250%"
             android:background="@drawable/green_button"
-            android:text="@string/word_note_list_delete"
+            android:text="@string/word_note_list_cancel_delete"
             android:textColor="@android:color/white"
             android:layout_alignParentEnd="true"
             android:textSize="16sp"

@@ -330,9 +330,8 @@ public class IndexPage extends BaseActivity {
         index_page_dictionary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(IndexPage.this, ResourcesPicker.class);
-//                intent.putExtra("videoMode", VideoMode.TEST);
-//                startActivity(intent);
+                Intent intent = new Intent(IndexPage.this, WordNoteList.class);
+                startActivity(intent);
             }
         });
     }

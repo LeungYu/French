@@ -88,7 +88,7 @@ public class WordNoteAdapter extends BaseAdapter {
 
         public void bindData(WordNote wordNote) {
             title.setText(wordNote.getWord());
-            info.setText(wordNote.getInfo());
+//            info.setText(wordNote.getInfo());
         }
     }
 

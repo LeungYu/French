@@ -84,5 +84,7 @@
     <string name="folder_num">个文件</string>
     <!--word_note_list-->
     <string name="word_note_list_title">生词本</string>
-    <string name="word_note_list_delete">删除</string>
+    <string name="word_note_list_cancel_delete">返 回</string>
+    <string name="word_note_list_delete">删 除</string>
+    <string name="word_num">个单词</string>
 </resources>

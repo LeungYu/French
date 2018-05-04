@@ -33,6 +33,8 @@ import java.util.Comparator;
 
 /**
  * Created by 11951 on 2018-05-02.
+ * 文件管理器
+ * 两个模式:.mp4,.ass
  */
 
 public class ResourcesPicker extends BaseActivity {
@@ -186,12 +188,6 @@ public class ResourcesPicker extends BaseActivity {
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == 0) {
-                    button.setAlpha(0.75f);
-                }
-                if (event.getAction() == 1 || event.getAction() == 3) {
-                    button.setAlpha(1f);
-                }
                 return false;
             }
         });
