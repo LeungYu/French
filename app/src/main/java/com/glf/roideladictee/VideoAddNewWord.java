@@ -33,6 +33,7 @@ import com.glf.roideladictee.MyView.TestInputDialog;
 import com.glf.roideladictee.TranslateWindow.TranslatorFrame;
 import com.glf.roideladictee.fr_app.fr_contest;
 import com.glf.roideladictee.tools.BaseActivity;
+import com.glf.roideladictee.tools.LocaleUtils;
 
 import org.json.JSONArray;
 import org.jsoup.Jsoup;
@@ -52,6 +53,8 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.glf.roideladictee.tools.LocaleUtils.LOCALE_CHINESE;
 
 /**
  * Created by 11951 on 2018-04-24.
@@ -118,6 +121,11 @@ public class VideoAddNewWord extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (language.equals("ZH")) {
+            LocaleUtils.updateLocale(VideoAddNewWord.this, LOCALE_CHINESE);
+        }else{
+            LocaleUtils.updateLocale(VideoAddNewWord.this, LocaleUtils.LOCALE_FRENCH);
+        }
         setContentView(R.layout.video_add_new_word);
         Init();//初始化
     }
@@ -192,7 +200,7 @@ public class VideoAddNewWord extends BaseActivity {
             public void onClick(View v) {
                 add_word_button.setVisibility(View.INVISIBLE);
                 stringInitTranslation(addWord);
-                add_word_php(addWord.replaceAll("\\.|@|\\?|!|\"",""));
+                add_word_php(addWord.replaceAll("\\.|@|\\?|!|\"|,",""));
             }
         });
         add_word_button.setOnTouchListener(new View.OnTouchListener() {
@@ -533,7 +541,7 @@ public class VideoAddNewWord extends BaseActivity {
             hasSetTestCaption = false;
             for(String mcaption:mcaptions) {
                 captions.add(mcaption);
-                if(testCaption.equals(mcaption.replaceAll("\\.|@|\\?|!|\"",""))){
+                if(testCaption.equals(mcaption.replaceAll("\\.|@|\\?|!|\"|,",""))){
                     isTestCaptions.add(true);
                 }else isTestCaptions.add(false);
             }
@@ -548,7 +556,7 @@ public class VideoAddNewWord extends BaseActivity {
                     if (!firstCaptions && !hasSetTestCaption && mcaption.length() > testCaptionMinLength
                             && mcaption.indexOf('\'')==-1 && mcaption.indexOf('-')==-1 && Math.random() > numPercentCaption) {
                         hasSetTestCaption = true;
-                        testCaption = mcaption.replaceAll("\\.|@|\\?|!|\"","");
+                        testCaption = mcaption.replaceAll("\\.|@|\\?|!|\"|,","");
                         isTestCaptions.add(true);
                     } else {
                         isTestCaptions.add(false);
@@ -570,7 +578,7 @@ public class VideoAddNewWord extends BaseActivity {
             sum++;
         }else {
             stringInitTranslation(testCaption);
-            wrong_word_php(testCaption.replaceAll("\\.|@|\\?|!|\"",""));
+            wrong_word_php(testCaption.replaceAll("\\.|@|\\?|!|\"|,",""));
             sum++;
             this.testStatus = testStatus;
             Intent intent = new Intent(VideoAddNewWord.this, TranslatorFrame.class);
@@ -580,7 +588,7 @@ public class VideoAddNewWord extends BaseActivity {
     }
 
     public void stringInitTranslation(String temp){
-        final String target = temp.replaceAll("\\.|@|\\?|!|\"","");
+        final String target = temp.replaceAll("\\.|@|\\?|!|\"|,","");
         if (DataSupport.select("word").where("word = ?",target).find(WordNote.class).size() != 0)return;
         final String[] setter = {target,"",""};
         new Thread(){

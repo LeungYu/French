@@ -27,6 +27,7 @@ public class BaseActivity extends AppCompatActivity {
     protected static boolean isFirst=true;
     protected static boolean isLogin=false;
     protected static String login_user;
+    protected static String language = "ZH";
     protected ActivityController activityController;
     protected HomeWatcherReceiver homewatcherreceiver;
     protected static NotificationManager myManager;

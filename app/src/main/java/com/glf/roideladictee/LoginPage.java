@@ -741,6 +741,11 @@ public class LoginPage extends BaseActivity {
                                     Intent Index_Page_Activity = new Intent(LoginPage.this, IndexPage.class);
                                     LoginPage.super.login_user=login_user;
                                     Index_Page_Activity.putExtra("login_user", login_user);
+                                    if(login_page_language.getCheckedRadioButtonId()==R.id.login_page_language_zh){
+                                        language="ZH";
+                                    }else{
+                                        language="FR";
+                                    }
                                     startActivity(Index_Page_Activity);
                                     LoginPage.this.finish();
                                 }

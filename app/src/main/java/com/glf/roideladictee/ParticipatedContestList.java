@@ -21,6 +21,7 @@ import com.glf.roideladictee.MyEnum.VideoMode;
 import com.glf.roideladictee.MyView.LoadingPHP;
 import com.glf.roideladictee.fr_app.fr_contest;
 import com.glf.roideladictee.tools.BaseActivity;
+import com.glf.roideladictee.tools.LocaleUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +37,8 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.glf.roideladictee.tools.LocaleUtils.LOCALE_CHINESE;
 
 /**
  * Created by 11951 on 2018-05-04.
@@ -95,6 +98,11 @@ public class ParticipatedContestList extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (language.equals("ZH")) {
+            LocaleUtils.updateLocale(ParticipatedContestList.this, LOCALE_CHINESE);
+        }else{
+            LocaleUtils.updateLocale(ParticipatedContestList.this, LocaleUtils.LOCALE_FRENCH);
+        }
         setContentView(R.layout.participate_contest_list);
 //        test();//测试用
         Init();// 初始化

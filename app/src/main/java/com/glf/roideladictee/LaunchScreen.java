@@ -111,6 +111,7 @@ public class LaunchScreen extends BaseActivity {
             }
             else if(loc.equals(Locale.FRENCH)){
                 System.out.println("设置法语");
+                language = "FR";
                 LocaleUtils.updateLocale(LaunchScreen.this, LocaleUtils.LOCALE_FRENCH);
                 LaunchScreen.this.restartAct();
             }

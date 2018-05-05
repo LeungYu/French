@@ -24,6 +24,7 @@ import com.glf.roideladictee.MyView.LoadingPHP;
 import com.glf.roideladictee.TranslateWindow.TranslatorFrame;
 import com.glf.roideladictee.fr_app.fr_contest;
 import com.glf.roideladictee.tools.BaseActivity;
+import com.glf.roideladictee.tools.LocaleUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +40,8 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.glf.roideladictee.tools.LocaleUtils.LOCALE_CHINESE;
 
 /**
  * Created by 11951 on 2018-05-04.
@@ -59,7 +62,7 @@ public class WordNoteList extends BaseActivity {
         public void handleMessage(Message msg) {
             String jsonData;
             JSONArray jsonArray = null;
-            word_note_layout.removeView(loadingPHP);
+//            word_note_layout.removeView(loadingPHP);
             switch (msg.what) {
                 case 0X12:
                     jsonData = (String) msg.obj;
@@ -73,6 +76,11 @@ public class WordNoteList extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (language.equals("ZH")) {
+            LocaleUtils.updateLocale(WordNoteList.this, LOCALE_CHINESE);
+        }else{
+            LocaleUtils.updateLocale(WordNoteList.this, LocaleUtils.LOCALE_FRENCH);
+        }
         setContentView(R.layout.word_note_list);
         Init();// 初始化
     }
@@ -240,7 +248,7 @@ public class WordNoteList extends BaseActivity {
     }
 
     protected void delete_word_php(final String word){
-        word_note_layout.addView(loadingPHP);
+//        word_note_layout.addView(loadingPHP);
         new Thread(new Runnable() {
             @Override
             public void run() {

@@ -19,9 +19,12 @@ import android.widget.TextView;
 
 import com.glf.roideladictee.MyEnum.VideoMode;
 import com.glf.roideladictee.tools.BaseActivity;
+import com.glf.roideladictee.tools.LocaleUtils;
 import com.glf.roideladictee.tools.MeasureView;
 
 import java.io.File;
+
+import static com.glf.roideladictee.tools.LocaleUtils.LOCALE_CHINESE;
 
 public class IndexPage extends BaseActivity {
     RelativeLayout root;
@@ -66,6 +69,11 @@ public class IndexPage extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (super.language.equals("ZH")) {
+            LocaleUtils.updateLocale(IndexPage.this, LOCALE_CHINESE);
+        }else{
+            LocaleUtils.updateLocale(IndexPage.this, LocaleUtils.LOCALE_FRENCH);
+        }
         setContentView(R.layout.activity_index_page);
         root=(RelativeLayout)findViewById(R.id.index_page_root);
         root_lp = (FrameLayout.LayoutParams) root.getLayoutParams();

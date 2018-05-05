@@ -25,7 +25,7 @@
         android:layout_marginBottom="17sp"/>
 
     <Button
-        android:background="@drawable/add_word_button"
+        android:background="@drawable/add_word_button_fr"
         android:id="@+id/add_word_button"
         app:layout_widthPercent="8%"
         app:layout_aspectRatio="250%"

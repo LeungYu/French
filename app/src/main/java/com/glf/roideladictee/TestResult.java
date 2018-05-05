@@ -16,6 +16,7 @@ import com.glf.roideladictee.MyAdapter.ParticipateCotestAdapter;
 import com.glf.roideladictee.MyView.LoadingPHP;
 import com.glf.roideladictee.fr_app.fr_contest;
 import com.glf.roideladictee.tools.BaseActivity;
+import com.glf.roideladictee.tools.LocaleUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +31,8 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.glf.roideladictee.tools.LocaleUtils.LOCALE_CHINESE;
 
 /**
  * Created by 11951 on 2018-05-02.
@@ -63,6 +66,11 @@ public class TestResult extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (language.equals("ZH")) {
+            LocaleUtils.updateLocale(TestResult.this, LOCALE_CHINESE);
+        }else{
+            LocaleUtils.updateLocale(TestResult.this, LocaleUtils.LOCALE_FRENCH);
+        }
         setContentView(R.layout.test_result);
         Init();//初始化
     }

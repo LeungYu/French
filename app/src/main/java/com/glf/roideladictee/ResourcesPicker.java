@@ -26,11 +26,14 @@ import com.glf.roideladictee.MyComparator.FileComparator;
 import com.glf.roideladictee.MyEnum.VideoMode;
 import com.glf.roideladictee.fr_app.fr_contest;
 import com.glf.roideladictee.tools.BaseActivity;
+import com.glf.roideladictee.tools.LocaleUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+
+import static com.glf.roideladictee.tools.LocaleUtils.LOCALE_CHINESE;
 
 /**
  * Created by 11951 on 2018-05-02.
@@ -58,6 +61,11 @@ public class ResourcesPicker extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (language.equals("ZH")) {
+            LocaleUtils.updateLocale(ResourcesPicker.this, LOCALE_CHINESE);
+        }else{
+            LocaleUtils.updateLocale(ResourcesPicker.this, LocaleUtils.LOCALE_FRENCH);
+        }
         setContentView(R.layout.resources_picker);
         Init();// 初始化
     }

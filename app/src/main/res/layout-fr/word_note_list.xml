@@ -81,7 +81,7 @@
             android:text="@string/word_note_list_cancel_delete"
             android:textColor="@android:color/white"
             android:layout_alignParentEnd="true"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:id="@+id/button"
             android:layout_centerVertical="true"
             android:textAlignment="center"
