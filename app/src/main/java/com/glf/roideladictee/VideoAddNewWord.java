@@ -94,7 +94,7 @@ public class VideoAddNewWord extends BaseActivity {
         /*ADD模式用botton*/
         /*TEST模式用top*/
         private int testCaptionMinLength = 6;
-        private float numPercentCaption = (float)0;
+        private float numPercentCaption = (float)0.50;
         private Boolean hasSetTestCaption = false;
         private String testCaption = "TESTCAPTION";
         private int seeToWhere = -3;
@@ -102,7 +102,7 @@ public class VideoAddNewWord extends BaseActivity {
         private TestInputDialog testInputDialog;
         private int sum = 0;
         private int right = 0;
-        private float testMin =(float) 0.1;
+        private float testMin =(float) 2;
         /*TEST模式用end*/
     /*字幕用botton*/
 
