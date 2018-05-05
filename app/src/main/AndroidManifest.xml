@@ -18,13 +18,16 @@
         </activity>
         <activity
             android:name=".TranslateWindow.TranslatorFrame"
+            android:launchMode="singleInstance"
             android:theme="@style/MyDialogActivityStyle" />
         <activity
             android:name=".LoginPage"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoBar" />
         <activity
             android:name=".NewLoginPage"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoBar" />
         <activity
@@ -35,11 +38,13 @@
         </activity>
         <activity
             android:name=".VideoAddNewWord"
+            android:launchMode="singleInstance"
             android:screenOrientation="landscape"
             android:theme="@style/MyVideoStyle">
         </activity>
         <activity
             android:name=".LaunchScreen"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoBar">
             <intent-filter>
@@ -49,6 +54,7 @@
         </activity>
         <activity
             android:name=".TestResult"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoBar" />
         <activity
@@ -57,14 +63,17 @@
             android:theme="@style/AppTheme_NoBar">
         </activity>
         <activity android:name=".WordNoteList"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoBar" />
         <activity android:name=".ParticipateContestList"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoBar"  />
         <activity android:name=".ParticipatedContestList"
-        android:screenOrientation="portrait"
-        android:theme="@style/AppTheme_NoBar"  />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_NoBar"  />
     </application>
 
 </manifest>

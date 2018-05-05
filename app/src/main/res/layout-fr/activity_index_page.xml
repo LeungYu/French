@@ -14,6 +14,7 @@
         android:background="#199900"
         android:orientation="horizontal">
         <LinearLayout
+            android:id="@+id/index_page_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
